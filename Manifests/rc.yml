@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: Hello-RC
+spec:
+  replicas: 5
+  template:
+    metadata:
+      labels:
+        app: nginx
+        editior: vscode
+        version: 1
+    spec:
+      containers:
+      - name: hello-pod
+        image: nginx
+        ports:
+        - containerPort: 80

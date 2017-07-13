@@ -12,3 +12,4 @@ spec:
     protocol: TCP
   selector:
     app: jenkins
+    version: 2.7.1

@@ -22,6 +22,6 @@ spec:
       containers:
       - name: my-web
         #image: nginx
-        image: httpd:
+        image: httpd
         ports:
         - containerPort: 80

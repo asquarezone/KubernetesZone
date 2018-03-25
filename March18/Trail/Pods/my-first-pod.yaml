@@ -3,7 +3,7 @@ kind: Pod
 metadata:
   name:  my-first-pod
 spec:
-  hostNetwork: true
+  #hostNetwork: true
   containers:
   - name:  my-first-container
     image: nginx

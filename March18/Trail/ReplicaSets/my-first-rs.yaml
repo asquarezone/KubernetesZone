@@ -1,0 +1,20 @@
+apiVersion: api
+kind: ReplicaSet
+metadata:
+  name:  my-first-rs
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      project: My-Project
+      ver: 0.1
+  template:
+    metadata:
+      name:  my-first-pod
+      labels:
+        project: My-Project
+        ver: 0.1
+    spec:
+      image: nginx
+      ports:
+      - containerPort: 80

@@ -13,7 +13,8 @@ spec:
         app: openmrs
         version: v1
     spec:
-      name: openmrs-pod
-      image: shaikkhajaibrahim/openmrs
-      ports:
-      - containerPort: 8080
+      containers:
+      - name: openmrs-pod
+        image: shaikkhajaibrahim/openmrs
+        ports:
+        - containerPort: 8080

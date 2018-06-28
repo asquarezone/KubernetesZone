@@ -9,10 +9,11 @@ spec:
     version: v1
   template:
     metadata:
-      name: openmrs-pod
       labels:
         app: openmrs
         version: v1
+    spec:
+      name: openmrs-pod
       image: shaikkhajaibrahim/openmrs
       ports:
       - containerPort: 8080

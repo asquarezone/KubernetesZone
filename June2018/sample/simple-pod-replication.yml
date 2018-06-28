@@ -10,7 +10,7 @@ spec:
     metadata:
       labels:
         app: nginx
-        ver: 1.0
+        ver: "1.0"
     spec:
       containers:
       - name: simple-pod

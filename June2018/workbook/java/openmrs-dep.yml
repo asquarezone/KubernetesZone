@@ -1,11 +1,11 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
-meta-data:
+metadata:
   name: openmrs-deploy
 spec:
   replicas: 3
   minReadySeconds: 30
-  rollingUpdate:
+  RollingUpdate:
     maxUnavailable: 1
     maxSurge: 1
   template:

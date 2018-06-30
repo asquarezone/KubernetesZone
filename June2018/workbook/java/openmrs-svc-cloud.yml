@@ -1,0 +1,11 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name:  openmrs
+spec:
+  selector:
+    app:  openmrs
+  type:  LoadBalancer
+  ports:
+  - port:  8080
+    

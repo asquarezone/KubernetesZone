@@ -1,0 +1,13 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: spc
+spec:
+  containers:
+    - image: shaikhajaibrahim/springpetclinic
+      name: spc-cont
+      ports:
+        - containerPort: 8080
+          name: spc-port
+          protocol: TCP

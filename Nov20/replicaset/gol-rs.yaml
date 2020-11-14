@@ -6,6 +6,10 @@ metadata:
 spec:
   minReadySeconds: 5
   replicas: 2
+  selector:
+    matchLabels:
+      app: gol
+      version: "07112020"
   template:
     metadata:
       labels:

@@ -1,0 +1,23 @@
+---
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: gol-rs-label
+spec:
+  minReadySeconds: 10
+  replicas: 5
+  selector:
+    matchLabels:
+      app: gol
+  template:
+    metadata:
+      labels:
+        app: gol
+        version: "07112020"
+    spec:
+      containers:
+        - image: qualitythought/gameoflife:07112020
+          name: gol
+          ports:
+            - containerPort: 8080
+              protocol: TCP

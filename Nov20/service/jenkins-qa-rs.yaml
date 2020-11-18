@@ -1,0 +1,24 @@
+---
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: jenkins-qa
+spec:
+  minReadySeconds: 10
+  replicas: 2
+  selector:
+    matchLabels:
+      app: jenkins
+      env: qa
+  template:
+    metadata:
+      labels:
+        app: jenkins
+        env: qa
+    spec:
+      containers:
+        - image: jenkins:2.60.3
+          name: jenkins-qa
+          ports:
+            - containerPort: 8080
+              protocol: TCP

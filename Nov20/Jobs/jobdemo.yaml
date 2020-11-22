@@ -1,0 +1,16 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: one-time-job
+spec:
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: ubuntu-container
+          image: ubuntu
+          args:
+            - /bin/bash
+            - -c
+            - sleep 10m

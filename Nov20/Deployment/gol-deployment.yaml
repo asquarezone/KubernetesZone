@@ -15,15 +15,14 @@ spec:
   selector:
     matchLabels:
       app: gameoflife
-      version: "1.0"
   template:
     metadata:
       labels:
         app: gameoflife
-        version: "1.0"
+        version: "1.1"
     spec:
       containers:
-        - image: qualitythought/gameoflife:07112020
+        - image: jenkins:2.60.3
           name: gol-dev
           ports:
             - containerPort: 8080

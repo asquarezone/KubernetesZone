@@ -1,0 +1,13 @@
+---
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: configmap-pod
+spec:
+  containers:
+    - name: configmap-cont
+      image: alpine
+      command: ["/bin/sh", "-c", "sleep 1d"]
+      envFrom:
+        - configMapRef:
+            name: demovalue-map

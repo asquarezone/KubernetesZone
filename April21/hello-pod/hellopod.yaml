@@ -5,7 +5,7 @@ metadata:
   name: hello-pod
 spec:
   containers:
-    - image: jenkins
+    - image: jenkins/jenkins
       name: jenkinscont
       ports:
         - containerPort: 8080

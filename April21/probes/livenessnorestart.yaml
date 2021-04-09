@@ -4,6 +4,7 @@ kind: Pod
 metadata:
   name: liveness-norestart
 spec:
+  restartPolicy: Never
   containers:
     - name: ubuntu-container
       image: ubuntu:latest

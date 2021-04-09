@@ -1,0 +1,21 @@
+---
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: http-probe-demo
+spec:
+  containers:
+    - name: http-server
+      image: httpd:latest
+      ports:
+        - containerPort: 80
+          protocol: TCP
+      livenessProbe:
+        httpGet:
+          port: 80
+          path: /
+        initialDelaySeconds: 10
+        periodSeconds: 5
+        successThreshold: 5
+        failureThreshold: 1
+      

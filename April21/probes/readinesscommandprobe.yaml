@@ -13,7 +13,8 @@ spec:
         - sleep 30; touch /tmp/ready; sleep 600
       readinessProbe:
         exec:
-          - cat
-          - /tmp/ready
-      initialDelaySeconds: 10
-      periodSeconds: 5
+          command:
+            - cat
+            - /tmp/ready
+        initialDelaySeconds: 10
+        periodSeconds: 5

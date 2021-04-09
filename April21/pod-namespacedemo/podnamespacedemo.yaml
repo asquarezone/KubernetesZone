@@ -1,0 +1,12 @@
+---
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: namespace-demo
+  namespace: dev
+spec:
+  containers:
+    - image: jenkins/jenkins
+      name: jenkinscont
+      ports:
+        - containerPort: 8080

@@ -16,6 +16,6 @@ spec:
           path: /
         initialDelaySeconds: 10
         periodSeconds: 5
-        successThreshold: 5
+        successThreshold: 1
         failureThreshold: 1
       

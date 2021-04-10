@@ -1,0 +1,25 @@
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: daemonset-demo
+  labels:
+    app: daemonset-example
+spec:
+  minReadySeconds: 10
+  selector:
+    matchLabels:
+      app: daemon
+  template:
+    metadata:
+      labels:
+        app: daemon
+        version: "1.0"
+    spec:
+      containers:
+        - name: alpine
+          image: alpine
+          args:
+            - /bin/sh
+            - -c
+            - sleep 1d

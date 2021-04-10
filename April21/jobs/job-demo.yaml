@@ -1,0 +1,19 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: job-demo
+spec:
+  template:
+    metadata:
+      labels:
+        app: jobdemo
+    spec:
+      containers:
+        - name: dummyjob
+          image: alpine
+          args:
+            - /bin/sh
+            - -c
+            - sleep 2m
+      restartPolicy: OnFailure

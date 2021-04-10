@@ -1,0 +1,16 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: label-demo3
+  labels:
+    environment: qa
+    team: sys-ops
+    project: qt-elearn
+spec:
+  containers:
+    - name: mysql-container
+      image: mysql
+      ports:
+        - containerPort: 3306
+          protocol: TCP

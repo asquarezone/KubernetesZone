@@ -22,11 +22,11 @@ spec:
       labels:
         app: jenkins
         environment: production
-        version: "1.6"
+        version: "2.60"
     spec:
       containers:
         - name: jenkins-container
-          image: jenkins:1.651.1
+          image: jenkins:2.60.3
           ports:
             - containerPort: 8080
               protocol: TCP

@@ -1,0 +1,16 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: label-demo1
+  labels:
+    environment: developer
+    team: infra-ops
+    project: qt-ecommerce
+spec:
+  containers:
+    - name: nginx-container
+      image: nginx
+      ports:
+        - containerPort: 80
+          protocol: TCP

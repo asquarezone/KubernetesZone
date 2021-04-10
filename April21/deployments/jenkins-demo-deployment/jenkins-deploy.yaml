@@ -1,0 +1,33 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jenkins-deployment
+  labels:
+    app: jenkins
+spec:
+  replicas: 3
+  minReadySeconds: 20
+  selector:
+    matchLabels:
+      app: jenkins
+      environment: production
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+  template:
+    metadata:
+      labels:
+        app: jenkins
+        environment: production
+        version: "1.6"
+    spec:
+      containers:
+        - name: jenkins-container
+          image: jenkins:1.651.1
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+

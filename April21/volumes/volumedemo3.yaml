@@ -1,0 +1,47 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-with-multiple-volume
+spec:
+  containers:
+    - image: alpine
+      name: alpine1-container
+      args:
+       - /bin/sh
+       - -c
+       - sleep 60s
+      volumeMounts:
+        - mountPath: /data
+          name: data-volume
+        - mountPath: /var/log
+          name: logs-volume
+    - image: alpine
+      name: alpine2-container
+      args:
+       - /bin/sh
+       - -c
+       - sleep 60s
+      volumeMounts:
+        - mountPath: /data
+          name: data-volume
+        - mountPath: /var/log
+          name: logs-volume
+    - image: ubuntu
+      name: ubuntu-container
+      args:
+       - /bin/bash
+       - -c
+       - sleep 60s
+      volumeMounts:
+        - mountPath: /data
+          name: data-volume
+        - mountPath: /var/log
+          name: logs-volume
+  volumes:
+    - name: data-volume
+      emptyDir: {}
+    - name: logs-volume
+      hostPath:
+        path: /var/log
+        

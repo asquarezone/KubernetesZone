@@ -4,6 +4,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: hello-pvc
 spec: 
+  capacity:
+    storage: 1Gi
   accessModes:
     - ReadWriteOnce
   resources:

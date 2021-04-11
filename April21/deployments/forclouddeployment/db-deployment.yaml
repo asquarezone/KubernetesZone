@@ -1,0 +1,44 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: db-deploy
+  labels:
+    app: db
+spec:
+  minReadySeconds: 20
+  replicas: 1
+  selector:
+    matchLabels:
+      app: db
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 50%
+      maxUnavailable: 50%
+  template:
+    metadata:
+      labels:
+        app: db
+        db: postgres
+    spec:
+      containers:
+        - env: 
+            - name: POSTGRES_PASSWORD
+              value: india@123
+          image: postgres:13
+          ports:
+            - containerPort: 5432
+              protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: db-service
+spec:
+  type: ClusterIP
+  selector:
+    app: db
+  ports:
+    - port: 5432
+      targetPort: 5432

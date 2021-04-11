@@ -23,7 +23,8 @@ spec:
         db: postgres
     spec:
       containers:
-        - env: 
+        - name: postgres-container
+          env: 
             - name: POSTGRES_PASSWORD
               value: india@123
           image: postgres:13

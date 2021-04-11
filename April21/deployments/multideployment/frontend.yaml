@@ -1,0 +1,32 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-deployment
+  labels:
+    app: frontend
+spec:
+  replicas: 3
+  minReadySeconds: 20
+  selector:
+    matchLabels:
+      app: frontend
+      environment: production
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+  template:
+    metadata:
+      labels:
+        app: frontend
+        environment: production
+    spec:
+      containers:
+        - name: frontend-container
+          image: nginx
+          ports:
+            - containerPort: 80
+              protocol: TCP
+

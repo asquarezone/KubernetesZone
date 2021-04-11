@@ -1,0 +1,35 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deployment
+  labels:
+    app: backend
+spec:
+  replicas: 1
+  minReadySeconds: 20
+  selector:
+    matchLabels:
+      app: backend
+      environment: production
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+  template:
+    metadata:
+      labels:
+        app: backend
+        environment: production
+    spec:
+      containers:
+        - name: backend-container
+          image: mysql:5.7
+          ports:
+            - containerPort: 3306
+              protocol: TCP
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: 'qtadmin@123'
+

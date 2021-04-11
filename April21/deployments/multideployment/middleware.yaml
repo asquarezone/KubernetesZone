@@ -1,0 +1,32 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: middleware-deployment
+  labels:
+    app: middleware
+spec:
+  replicas: 3
+  minReadySeconds: 20
+  selector:
+    matchLabels:
+      app: middleware
+      environment: production
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+  template:
+    metadata:
+      labels:
+        app: middleware
+        environment: production
+    spec:
+      containers:
+        - name: middleware-container
+          image: httpd
+          ports:
+            - containerPort: 80
+              protocol: TCP
+

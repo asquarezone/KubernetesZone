@@ -13,4 +13,4 @@ spec:
        - sleep 1d
       envFrom:
         - configMapRef:
-            name: singlevalue-cmap
+            name: appconfigmap

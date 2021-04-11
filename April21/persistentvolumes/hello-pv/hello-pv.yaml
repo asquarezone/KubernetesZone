@@ -4,6 +4,8 @@ kind: PersistentVolume
 metadata:
   name: hello-pv
 spec:
+  capacity:
+    storage: 1Gi
   accessModes: 
     - ReadWriteOnce
   hostPath:

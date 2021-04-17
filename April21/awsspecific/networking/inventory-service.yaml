@@ -1,0 +1,43 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: inventory-service-deployment
+  labels:
+    app: inventory-service
+spec:
+  replicas: 3
+  minReadySeconds: 20
+  selector:
+    matchLabels:
+      app: inventory-service
+      environment: production
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+  template:
+    metadata:
+      labels:
+        app: inventory-service
+        environment: production
+    spec:
+      containers:
+        - name: inventory-container
+          image: nginx
+          ports:
+            - containerPort: 80
+              protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: inventory-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: inventory-service
+  ports:
+    - port: 80
+      targetPort: 80

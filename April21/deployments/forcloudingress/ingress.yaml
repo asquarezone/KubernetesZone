@@ -4,22 +4,21 @@ kind: Ingress
 metadata:
   name: ingress-demo
   annotations:
-    kubernetes.io/ingress.global-static-ip-name: my-static-address
     kubernetes.io/ingress.class: "gce"
 spec:
   rules:
     - http:
         paths:
-          - path: /admin
+          - path: /*
             backend:
               serviceName: admin-service
               servicePort: 80
-          - path: /inventory
+          - path: /inventory/*
             backend:
               serviceName: inventory-service
               servicePort: 80
-          - path: /order
+          - path: /order/*
             backend:
               serviceName: order-service
-              servicePort: 80
+              servicePort: 8080
           

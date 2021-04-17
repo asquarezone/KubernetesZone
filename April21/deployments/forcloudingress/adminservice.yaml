@@ -24,8 +24,8 @@ spec:
         environment: production
     spec:
       containers:
-        - name: nginx-container
-          image: nginx
+        - name: httpd-container
+          image: httpd
           ports:
             - containerPort: 80
               protocol: TCP
@@ -35,7 +35,7 @@ kind: Service
 metadata:
   name: admin-service
 spec:
-  type: ClusterIP
+  type: NodePort
   selector:
     app: admin-service
   ports:

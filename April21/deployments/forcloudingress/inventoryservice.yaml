@@ -24,7 +24,7 @@ spec:
         environment: production
     spec:
       containers:
-        - name: nginx-container
+        - name: inventory-container
           image: nginx
           ports:
             - containerPort: 80
@@ -35,7 +35,7 @@ kind: Service
 metadata:
   name: inventory-service
 spec:
-  type: ClusterIP
+  type: NodePort
   selector:
     app: inventory-service
   ports:

@@ -1,0 +1,20 @@
+---
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: pod-for-dynamicstorage
+spec:
+  containers:
+    - name: storage-test
+      image: alpine
+      volumeMounts:
+        - mountPath: "/tools"
+          name: dynamicvolume
+      args:
+        - /bin/sh
+        - -c
+        - sleep 1d
+  volumes:
+    - name: dynamicvolume
+      persistentVolumeClaim:
+        claimName: azure-managed-disk

@@ -53,7 +53,8 @@ spec:
   rules:
     - http:
         paths:
-          - path: /*
+          - pathType: Exact
+            path: /*
             backend:
               service:
                 name: service-2048

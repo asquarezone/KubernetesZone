@@ -5,10 +5,10 @@
 replicaCount: 3
 
 image:
-  repository: jenkins
+  repository: nginx
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "2.60.3"
+  tag: "latest"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -39,7 +39,7 @@ securityContext: {}
 service:
   type: LoadBalancer
   port: 80
-  containerPort: 8080
+  containerPort: 80
 
 ingress:
   enabled: false

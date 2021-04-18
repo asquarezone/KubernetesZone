@@ -17,4 +17,11 @@ spec:
         target: 
           type: Utilization
           averageUtilization: 20 # this is not a correct value
+    - type: Resource 
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageValue: 10Mi
+      
 

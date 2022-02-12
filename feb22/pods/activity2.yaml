@@ -1,0 +1,21 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: activity2
+spec:
+  containers:
+    - name: activity2
+      image: mysql:8
+      env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: root123
+        - name: MYSQL_DATABASE
+          value: qtecommerce
+        - name: MYSQL_USER
+          value: qtdevops
+        - name: MYSQL_PASSWORD
+          value: qtdevops123
+      ports:
+        - containerPort: 3306
+          protocol: TCP

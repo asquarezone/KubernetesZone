@@ -8,11 +8,12 @@ spec:
   selector:
     matchLabels:
       app: jenkins
+      version: "2.334"
   template:
     metadata:
       labels:
         app: jenkins
-        version: 2.334
+        version: "2.334"
     spec:
       containers:
         - name: jenkins

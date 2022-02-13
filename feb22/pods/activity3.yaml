@@ -1,0 +1,12 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: activity3
+spec:
+  containers:
+    - name: exercise1
+      image: alpine
+      args: 
+        - echo
+        - hello

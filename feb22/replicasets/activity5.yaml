@@ -5,6 +5,10 @@ metadata:
   name: activity5
 spec:
   replicas: 2
+  selector:
+    matchLabels:
+      app: jenkins
+      version: 2.334
   template:
     metadata:
       labels:

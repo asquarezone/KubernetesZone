@@ -8,7 +8,6 @@ spec:
   selector:
     matchLabels:
       app: jenkins
-      version: 2.334
   template:
     metadata:
       labels:

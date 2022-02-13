@@ -1,0 +1,20 @@
+---
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: activity5
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: jenkins
+        version: 2.334
+    spec:
+      containers:
+        - name: jenkins
+          image: jenkins/jenkins:2.334-slim-jdk8
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+      

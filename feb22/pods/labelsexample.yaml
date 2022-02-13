@@ -1,0 +1,17 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: labelsdemo
+  labels:
+    env: dev
+    app: qtweb
+    ver: 1.1.0
+spec:
+  containers:
+    - name: nginx
+      image: nginx:1.21
+      ports:
+        - containerPort: 80
+          protocol: TCP
+      

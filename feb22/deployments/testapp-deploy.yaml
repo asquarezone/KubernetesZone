@@ -1,0 +1,23 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: testapp-deploy
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: testapp
+      ver: 1.0.0
+  template: 
+    metadata:
+      labels:
+        app: testapp
+        ver: 1.0.0
+    spec:
+      containers:
+        - name: testapp
+          image: shaikkhajaibrahim/testapp:1.0.0
+          ports:
+            - containerPort: 80
+              protocol: TCP

@@ -1,0 +1,24 @@
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata: 
+  name: sample-ds
+  labels:
+    app: alpine
+spec:
+  selector:
+    matchLabels:
+      app: alpine
+  template:
+    metadata:
+      labels:
+        app: alpine
+    spec:
+      #nodeSelector: Creating daemonset on specific nodes
+      #  agentpool: nodepool1
+      containers:
+        - name: alpine
+          image: alpine
+          args:
+            - sleep
+            - 1d

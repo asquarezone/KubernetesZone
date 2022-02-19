@@ -1,0 +1,17 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata: 
+  name: cron-job
+spec:
+  schedule: "30 */2 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: cron-job
+              image: alpine
+              args:
+                - sleep
+                - 60s
+          restartPolicy: OnFailure

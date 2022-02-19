@@ -13,15 +13,16 @@ spec:
     rollingUpdate:
       maxSurge: 50%
       maxUnavailable: 50%
+  minReadySeconds: 60
   template: 
     metadata:
       labels:
         app: testapp
-        ver: 1.0.0
+        ver: 1.0.1
     spec:
       containers:
         - name: testapp
-          image: shaikkhajaibrahim/testapp:1.0.0
+          image: shaikkhajaibrahim/testapp:1.0.1
           ports:
             - containerPort: 80
               protocol: TCP

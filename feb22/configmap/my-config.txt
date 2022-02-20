@@ -1,0 +1,3 @@
+log_path = /var/log/testme
+app_name = qtcommerce
+sleep_duration = 1d

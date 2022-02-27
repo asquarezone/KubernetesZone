@@ -1,0 +1,51 @@
+---
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata: 
+  name: mysql
+  labels:
+    app: mysql
+spec:
+  replicas: 1
+  minReadySeconds: 10
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+        - name: mysqldb
+          image: mysql:8
+          resources:
+            requests:
+              cpu: 1
+              memory: 1Gi
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: india123
+            - name: MYSQL_DATABASE
+              value: qtcommerce
+            - name: MYSQL_USER
+              value: qtdevops
+            - name: MYSQL_PASSWORD
+              value: india123
+          ports:
+            - containerPort: 3306
+          livenessProbe:
+            tcpSocket:
+              port: 3306
+          readinessProbe:
+            tcpSocket:
+              port: 3306
+          volumeMounts:
+            - name: mysql-volume
+              mountPath: "/var/lib/mysql"
+      volumes: 
+        - name: mysql-volume
+          persistentVolumeClaim:
+            claimName: mysql-claim
+  
+            

@@ -12,7 +12,7 @@ spec:
   initContainers:
     - name: init-api-service
       image: alpine:3
-      command: ['sh', '-c', "until ping -c 20 google.com; do echo waiting for myservice; sleep 2; done"]
+      command: ["sleep", "30s"]
     - name: init-db-service
       image: alpine:3
-      command: ['sh', '-c', "until ping -c 20 google.com; do echo waiting for myservice; sleep 2; done"]
+      command: ["sleep", "30s"]

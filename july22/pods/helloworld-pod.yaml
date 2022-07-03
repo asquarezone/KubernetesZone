@@ -6,4 +6,4 @@ metadata:
 spec:
   containers:
     - name: helloworld
-      image: helloworld
+      image: hello-world

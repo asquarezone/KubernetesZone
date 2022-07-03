@@ -8,7 +8,7 @@ spec:
     - name: jenkins
       image: jenkins/jenkins:latest
       ports:
-        containerPort: 8080
+        - containerPort: 8080
   initContainers:
     - name: init-api-service
       image: alpine:3

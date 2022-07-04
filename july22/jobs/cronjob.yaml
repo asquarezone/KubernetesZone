@@ -1,0 +1,22 @@
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: cron-example
+spec:
+  schedule: "*/5 * * * *"
+  jobTemplate:
+    metadata:
+      labels:
+        app: batch
+        job: cron
+    spec:
+      template:
+        spec:
+          containers:
+            - name: cron-demo
+              image: alpine
+              command:
+                - sleep
+                - 10s
+      

@@ -15,8 +15,6 @@ spec:
         - name: job
           image: alpine
           command:
-            - ping
-            - -c
-            - "10"
-            - googlejksdfjkdshfkajsdfhkla.com
+            - exit
+            - "1"
       restartPolicy: OnFailure

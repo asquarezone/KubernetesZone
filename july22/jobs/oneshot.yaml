@@ -15,8 +15,6 @@ spec:
         - name: job
           image: alpine
           command:
-            - ping
-            - -c
-            - "50"
-            - google.com
+            - sleep
+            - 30s
       restartPolicy: OnFailure

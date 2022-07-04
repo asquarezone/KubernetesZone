@@ -19,4 +19,5 @@ spec:
               command:
                 - sleep
                 - 10s
+          restartPolicy: OnFailure
       

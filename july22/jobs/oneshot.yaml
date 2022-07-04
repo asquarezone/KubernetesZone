@@ -1,0 +1,22 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: oneshot
+  labels:
+    type: oneshot
+spec:
+  template:
+    metadata:
+      labels:
+        type: downloadjob
+    spec:
+      containers:
+        - name: job
+          image: alpine
+          command:
+            - ping
+            - -c
+            - "50"
+            - google.com
+      restartPolicy: OnFailure

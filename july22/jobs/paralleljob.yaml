@@ -1,0 +1,22 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: parallel
+  labels:
+    topic: jobs
+spec:
+  completions: 10
+  parallelism: 5
+  template:
+    metadata:
+      labels:
+        type: downloadjob
+    spec:
+      containers:
+        - name: job
+          image: alpine
+          command:
+            - sleep
+            - 10s
+      restartPolicy: OnFailure

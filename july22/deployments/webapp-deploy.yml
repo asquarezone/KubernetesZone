@@ -19,10 +19,10 @@ spec:
     metadata:
       labels:
         app: webapp
-        version: v1
+        version: v1.1
     spec:
       containers:
-        - image: nginx
+        - image: httpd
           name: qtwebapp
           readinessProbe:
             httpGet:

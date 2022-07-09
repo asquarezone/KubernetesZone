@@ -25,3 +25,13 @@ spec:
           image: nginx:1.23.0
           ports:
             - containerPort: 80
+          livenessProbe:
+            exec: 
+              command: pwd
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 2
+            periodSeconds: 3
+            

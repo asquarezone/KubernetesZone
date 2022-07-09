@@ -27,11 +27,11 @@ spec:
             - containerPort: 80
           livenessProbe:
             exec: 
-              command: pwd
+              command: 
+                - pwd
           readinessProbe:
             httpGet:
               path: /
               port: 80
             initialDelaySeconds: 2
             periodSeconds: 3
-            

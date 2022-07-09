@@ -5,6 +5,8 @@ metadata:
   name: webapp-deploy
   labels:
     app: webapp
+  annotations:
+    kubernetes.io/change-cause: "Updating to version 1.2"
 spec:
   replicas: 5
   selector:
@@ -22,7 +24,7 @@ spec:
         version: v1.1
     spec:
       containers:
-        - image: httpd
+        - image: caddy
           name: qtwebapp
           readinessProbe:
             httpGet:

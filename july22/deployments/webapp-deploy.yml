@@ -15,20 +15,20 @@ spec:
     rollingUpdate:
       maxSurge: 20%
       maxUnavailable: 20%
-    template:
-      metadata:
-        labels:
-          app: webapp
-          version: v1
-      spec:
-        containers:
-          - image: nginx
-            name: qtwebapp
-            readinessProbe:
-              httpGet:
-                path: /
-                port: 80
-            ports:
-            - containerPort: 80
+  template:
+    metadata:
+      labels:
+        app: webapp
+        version: v1
+    spec:
+      containers:
+        - image: nginx
+          name: qtwebapp
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+          ports:
+          - containerPort: 80
 
 

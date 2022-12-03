@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: activity3
+spec:
+  containers:
+    - image: alpine
+      command:
+        - sleep
+      args:
+        - 1d
+      env:
+        - name: TEST
+          value: HELLO

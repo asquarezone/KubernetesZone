@@ -6,9 +6,15 @@ metadata:
 spec:
   minReadySeconds: 3
   replicas: 5
+  selector:
+    matchLabels:
+      app: nginx
   template:
     metadata:
       name: nginx-pod
+      labels:
+        app: nginx
+        ver: "1.23"
     spec:
       containers:
         - name: nginx

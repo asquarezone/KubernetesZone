@@ -1,0 +1,12 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: exp-pod
+spec:
+  containers:
+    - image: alpine
+      name: exp
+      command:
+        - sleep
+        - 1d

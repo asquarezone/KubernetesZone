@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: cicd
+  labels:
+    app: jenkins
+    purpose: cicd
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      purpose: cicd
+  template:
+    metadata:
+      labels:
+        purpose: cicd
+    spec:
+      containers:
+       - name: cicd
+         image: jenkins/jenkins:lts-jdk11
+         ports:
+           - containerPort: 8080
+             protocol: TCP
+      initContainers:
+       - name: ping
+         image: alpine:3.17.0      
+         command: ["ping" ,"-c","4","google.com"]

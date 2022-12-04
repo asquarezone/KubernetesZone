@@ -1,0 +1,13 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-svc
+spec:
+  selector:
+    app: nginx
+    ver: "1.0"
+  ports:
+    - name: webport
+      port: 35000
+      targetPort: 80

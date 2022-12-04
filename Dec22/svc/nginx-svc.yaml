@@ -12,4 +12,4 @@ spec:
     - name: webport
       port: 35000
       targetPort: 80
-      nodePort: 8080
+      nodePort: 32001

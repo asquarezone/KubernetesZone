@@ -1,0 +1,34 @@
+---
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: jenkins-rs
+  labels:
+    app: jenkins
+spec:
+  minReadySeconds: 5
+  replicas: 2
+  selector:
+    matchLabels:
+      app: jenkins
+      env: qa
+  template:
+    metadata:
+      name: jenkins-pod
+      labels:
+        app: jenkins
+        env: qa
+        jdk: "11"
+        ver: lts
+    spec:
+      containers:
+        - name: jenkins
+          image: jenkins/jenkins:lts-jdk11
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          resources:
+            requests:
+              memory: "256Mi"
+            limits:
+              memory: "512Mi"

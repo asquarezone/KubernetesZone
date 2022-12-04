@@ -4,7 +4,7 @@ kind: Service
 metadata:
   name: nginx-svc
 spec:
-  type: ClusterIP
+  type: NodePort
   selector:
     app: nginx
     ver: "1.0"
@@ -12,3 +12,4 @@ spec:
     - name: webport
       port: 35000
       targetPort: 80
+      nodePort: 8080

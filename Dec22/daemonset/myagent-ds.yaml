@@ -1,0 +1,24 @@
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: myagent-ds
+spec:
+  minReadySeconds: 5
+  selector:
+    matchLabels:
+      app: agent
+  template:
+    metadata:
+      name: agent-pod
+      labels:
+        app: agent
+        version: v1.0
+    spec:
+      containers:
+        - name: agent-pod
+          image: alpine:3
+          command:
+            - sleep
+            - 1d
+  

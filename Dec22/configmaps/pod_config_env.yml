@@ -1,0 +1,16 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-config-env
+spec:
+  containers:
+    - name: alpine
+      image: alpine:3
+      command:
+        - sleep
+        - 1d
+      envFrom:
+        - configMapRef:
+            name: hello-config
+            

@@ -1,0 +1,28 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mysql-vol-demo
+spec:
+  containers:
+    - name: mysql-contianer
+      image: mysql:8-debian
+      ports:
+        - containerPort: 3306
+          protocol: TCP
+      env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: rootroot
+        - name: MYSQL_DATABASE
+          value: employees
+        - name: MYSQL_USER
+          value: qtdevops
+        - name: MYSQL_PASSWORD
+          value: qtdevops
+      volumeMounts:
+        - mountPath: /var/lib/mysql
+          name: mysql-vol
+  volumes:
+    - name: mysql-vol
+      emptyDir:
+        

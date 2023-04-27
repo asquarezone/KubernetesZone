@@ -9,10 +9,12 @@ spec:
     metadata:
       name: getlivedata
     spec:
+      backoffLimit: 2
       template:
         metadata:
           name: livedatapod
         spec:
+          restartPolicy: OnFailure
           containers:
             - name: alpine
               image: alpine

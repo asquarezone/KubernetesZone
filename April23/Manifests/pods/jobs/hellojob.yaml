@@ -1,0 +1,15 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: hellojob
+spec:
+  template:
+    metadata:
+      name: jobpod
+    spec:
+      containers:
+        - image: alpine
+          command:
+            - sleep
+            - 10s

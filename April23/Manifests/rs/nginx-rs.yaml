@@ -6,9 +6,14 @@ metadata:
 spec:
   minReadySeconds: 1
   replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
   template:
     metadata:
       name: nginx-pod
+      labels:
+        app: nginx
     spec:
       containers:
         - name: nginx

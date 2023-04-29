@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-lb
+spec:
+  ports:
+    - name: nginx-lb
+      port: 80
+      protocol: TCP
+      targetPort: 80
+  selector:
+    app: nginx
+  type: LoadBalancer

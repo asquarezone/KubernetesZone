@@ -1,0 +1,59 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: httpd-svc
+  labels:
+    app: httpd
+spec:
+  ports:
+    - name: httpd-svc
+      port: 80
+      targetPort: 80
+  selector:
+    app: httpd
+  type: LoadBalancer
+      
+---
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: https-rs
+  labels:
+    app: httpd
+spec:
+  minReadySeconds: 1
+  replicas: 2
+  selector:
+    matchLabels:
+      app: httpd
+  template:
+    metadata:
+      name: httpd
+      labels:
+        app: httpd
+    spec:
+      containers:
+        - name: httpd
+          image: httpd:2.4.57
+          ports:
+            - containerPort: 80
+          livenessProbe:
+            failureThreshold: 3
+            initialDelaySeconds: 1
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+            httpGet:
+              path: /
+              port: 80
+          readinessProbe:
+            failureThreshold: 3
+            initialDelaySeconds: 1
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+            httpGet:
+              path: /
+              port: 80
+  

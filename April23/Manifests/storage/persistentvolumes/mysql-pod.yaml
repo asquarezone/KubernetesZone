@@ -1,0 +1,21 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mysql-dynamic-vol
+  labels:
+    app: mysql
+    layer: db
+spec:
+  containers:
+    - name: mysql
+      image: mysql:8
+      ports:
+        - containerPort: 3306
+      volumeMounts:
+        - name: mysql-pvol
+          mountPath: /var/lib/mysql
+  volumes:
+    - name: mysql-pvol
+      persistentVolumeClaim:
+        claimName: mysql-pvc

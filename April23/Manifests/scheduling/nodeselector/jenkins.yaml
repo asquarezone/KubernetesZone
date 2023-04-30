@@ -7,6 +7,7 @@ metadata:
     app: nginx
     purpose: nodeselector
 spec:
+  nodeName: "aks-nodepool1-32808340-vmss000000"
   containers:
     - name: jenkins
       image: jenkins/jenkins:jdk11

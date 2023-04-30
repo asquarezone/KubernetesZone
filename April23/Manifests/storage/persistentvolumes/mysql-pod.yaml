@@ -15,6 +15,15 @@ spec:
       volumeMounts:
         - name: mysql-pvol
           mountPath: /var/lib/mysql
+      env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: rootroot
+        - name: MYSQL_USER
+          value: qtdevops
+        - name: MYSQL_PASSWORD
+          value: rootroot
+        - name: MYSQL_DATABASE
+          value: employees
   volumes:
     - name: mysql-pvol
       persistentVolumeClaim:

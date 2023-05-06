@@ -1,0 +1,10 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-cm
+data:
+  MYSQL_DATABASE: nop
+  MYSQL_ROOT_PASSWORD: rootroot
+  MYSQL_USER: qtdevops
+  MYSQL_PASSWORD: rootroot

@@ -1,0 +1,16 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: alpine-config-env
+spec:
+  containers:
+    - name: alpine
+      image: alpine
+      envFrom:
+        - configMapRef:
+            name: dummy-cm
+            optional: false
+      args:
+        - sleep
+        - 1d

@@ -4,3 +4,7 @@ resources:
 
 namespace: dev
 namePrefix: dev-
+labels:
+  - pairs:
+      env: dev
+      version: "1.0.0"

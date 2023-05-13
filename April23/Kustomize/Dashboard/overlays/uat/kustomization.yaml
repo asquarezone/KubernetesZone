@@ -4,3 +4,8 @@ resources:
 
 namespace: uat
 namePrefix: uat-
+
+labels:
+  - pairs:
+      env: uat
+      version: "0.0.1"

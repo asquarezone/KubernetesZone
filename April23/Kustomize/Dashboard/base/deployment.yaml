@@ -20,9 +20,9 @@ spec:
       labels:
         app: dashboard
         version: "1.0.0"
-      spec:
-        containers:
-          - name: dashboard
-            image: shaikkhajaibrahim/dashboardservice:1.0.0
-            ports:
-              - containerPort: 80
+    spec:
+      containers:
+        - name: dashboard
+          image: shaikkhajaibrahim/dashboardservice:1.0.0
+          ports:
+            - containerPort: 80

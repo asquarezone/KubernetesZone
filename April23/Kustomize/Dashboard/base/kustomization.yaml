@@ -1,5 +1,5 @@
 ---
 resources:
-  - deployment.yml
-  - service.yml
-  - hpa.yml
+  - deployment.yaml
+  - service.yaml
+  - hpa.yaml

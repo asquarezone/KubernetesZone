@@ -1,0 +1,6 @@
+---
+bases:
+  - ../../bases
+
+namespace: dev
+namePrefix: dev-

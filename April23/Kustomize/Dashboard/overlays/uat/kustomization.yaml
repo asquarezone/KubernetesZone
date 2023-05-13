@@ -1,0 +1,6 @@
+---
+bases:
+  - ../../bases
+
+namespace: uat
+namePrefix: uat-

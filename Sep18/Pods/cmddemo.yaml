@@ -1,0 +1,20 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-pod
+  labels:
+    app: nginx
+    env: dev
+spec:
+  containers:
+    - name: webserver
+      image: nginx:1.25
+      ports:
+        - containerPort: 80
+          protocol: TCP
+    - name: logagent
+      image: alpine
+      args:
+        - sleep
+        - 1d

@@ -9,3 +9,4 @@ spec:
   containers:
     - name: shaheed
       image: alpine
+  restartPolicy: Never

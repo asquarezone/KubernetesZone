@@ -12,14 +12,11 @@ spec:
       labels:
         purpose: jobdemo
     spec:
-      selector:
-        matchLabels:
-          app: batch
       backoffLimit: 3
       template:
         metadata:
           labels:
-            app: batch
+            app: batchdemo
         spec:
           restartPolicy: OnFailure
           containers:

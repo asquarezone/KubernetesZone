@@ -9,9 +9,14 @@ spec:
   minReadySeconds: 2
   replicas: 3
   selector:
-    matchLabels:
-      app: jenkins
-      release: v1.1
+    matchExpressions:
+      - key: app
+        operator: In
+        values:
+          - jenkins
+          - hudson
+      - key: release
+        operator: Exists
   template:
     metadata:
       labels:

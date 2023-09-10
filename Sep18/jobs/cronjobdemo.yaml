@@ -21,6 +21,7 @@ spec:
           labels:
             app: batch
         spec:
+          restartPolicy: OnFailure
           containers:
             - name: batchdemo
               image: alpine

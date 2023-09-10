@@ -2,11 +2,45 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: shaheed
+  name: c1
   labels:
     app: nothing
 spec:
   containers:
-    - name: shaheed
+    - name: c1
       image: alpine
+      command:
+        - sleep
+        - 1d
+  restartPolicy: Never
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: c2
+  labels:
+    app: nothing
+spec:
+  containers:
+    - name: c1
+      image: alpine
+      command:
+        - sleep
+        - 1d
+  restartPolicy: Never
+---
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: c1
+  labels:
+    app: nothing
+spec:
+  containers:
+    - name: c1
+      image: alpine
+      command:
+        - sleep
+        - 1d
   restartPolicy: Never

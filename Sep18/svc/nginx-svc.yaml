@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-svc
+  labels:
+    app: nginx
+    purpose: svcdemo
+spec:
+  type: ClusterIP
+  selector:
+    app: nginx
+  ports:
+    - targetPort: 80
+      port: 80

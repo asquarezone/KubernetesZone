@@ -1,0 +1,29 @@
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: cronjobdemo
+  labels:
+    purpose: cronjobdemo
+spec:
+  schedule: '*/5 * * * *'
+  jobTemplate:
+    metadata:
+      labels:
+        purpose: jobdemo
+    spec:
+      selector:
+        matchLabels:
+          app: batch
+      backoffLimit: 3
+      template:
+        metadata:
+          labels:
+            app: batch
+        spec:
+          containers:
+            - name: batchdemo
+              image: alpine
+              command:
+                - sleep
+                - 10s

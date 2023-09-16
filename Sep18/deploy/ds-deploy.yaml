@@ -1,0 +1,35 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: prod
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ds-deploy
+  namespace: prod
+spec:
+  minReadySeconds: 1
+  replicas: 10
+  selector:
+    matchLabels:
+      app: web
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 30%
+      maxUnavailable: 20%
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+        - name: deploysample
+          image: shaikkhajaibrahim/deploy-sample:v1.0
+          ports:
+            - name: webport
+              containerPort: 80
+              protocol: TCP

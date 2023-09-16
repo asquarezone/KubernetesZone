@@ -10,6 +10,8 @@ kind: Deployment
 metadata:
   name: ds-deploy
   namespace: prod
+  annotations:
+    kubernetes.io/change-cause: "image updated to v2.0"
 spec:
   minReadySeconds: 1
   replicas: 10
@@ -28,7 +30,7 @@ spec:
     spec:
       containers:
         - name: deploysample
-          image: shaikkhajaibrahim/deploy-sample:v1.0
+          image: shaikkhajaibrahim/deploy-sample:v2.0
           ports:
             - name: webport
               containerPort: 80

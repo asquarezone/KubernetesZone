@@ -35,3 +35,17 @@ spec:
             - name: webport
               containerPort: 80
               protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: webport
+            failureThreshold: 3
+            periodSeconds: 1
+            successThreshold: 1
+          readinessProbe:
+            httpGet:
+              path: /
+              port: webport
+            failureThreshold: 2
+            periodSeconds: 2
+            successThreshold: 2

@@ -23,3 +23,8 @@ spec:
           ports:
             - containerPort: 80
               protocol: TCP
+          env:
+            - name: purpose
+              value: learning
+            - name: why
+              value: dontknow

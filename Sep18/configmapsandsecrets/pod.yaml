@@ -1,0 +1,19 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: cm-s-demo
+  labels:
+    app: demo
+spec:
+  containers:
+    - name: exp
+      image: alpine
+      command:
+        - sleep
+        - 1d
+      envFrom:
+        - configMapRef:
+            name: userinfo-cm
+        - secretRef:
+            name: userinfo-secret

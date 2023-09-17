@@ -1,0 +1,21 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nopdb
+  labels:
+    app: nopdb
+spec:
+  containers:
+    - name: nopdb
+      image: mysql:8
+      envFrom:
+        - secretRef:
+            name: db-cred
+      volumeMounts:
+        - name: nopvolume
+          mountPath: /var/lib/mysql 
+  volumes:
+    - name: nopvolume
+      persistentVolumeClaim:
+        claimName: nopdb-pvc

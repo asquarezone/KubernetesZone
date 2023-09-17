@@ -6,7 +6,7 @@ metadata:
 spec:
   accessModes: 
     - ReadWriteOnce
-  storageClassName: managed-premium
+  storageClassName: ebs-sc
   resources:
     requests:
       storage: 5Gi

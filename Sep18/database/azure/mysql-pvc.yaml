@@ -1,0 +1,12 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nopdb-pvc
+spec:
+  accessModes: 
+    - ReadWriteOnce
+  storageClassName: nop-retain
+  resources:
+    requests:
+      storage: 5Gi

@@ -1,0 +1,26 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: cm-s-demo-2
+  labels:
+    app: demo
+spec:
+  containers:
+    - name: exp
+      image: alpine
+      command:
+        - sleep
+        - 1d
+      volumeMounts:
+        - name: username-vol
+          mountPath: /creds/username
+        - name: password-vol
+          mountPath: /creds/password
+  volumes:
+    - name: username-vol
+      configMap:
+        name: userinfo-cm
+    - name: password-vol
+      secret:
+        secretName: userinfo-secret

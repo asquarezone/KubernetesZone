@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: httpd-twice
+spec:
+  containers:
+    - name: httpd1
+      image: httpd:2.4
+      ports:
+        - containerPort: 80
+    - name: httpd2
+      image: httpd:2.4
+      ports:
+        - containerPort: 80

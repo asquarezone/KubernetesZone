@@ -1,0 +1,16 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: trail4
+spec:
+  containers:
+    - name: jenkins
+      image: jenkins/jenkins:lts-jdk17
+      resources:
+        requests:
+          cpu: 500m
+          memory: 256Mi
+        limits:
+          cpu: 1000m
+          memory: 1Gi

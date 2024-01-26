@@ -1,0 +1,12 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: trail2
+spec:
+  containers:
+    - name: lifetime1day
+      image: alpine
+      args:
+        - sleep
+        - 1d

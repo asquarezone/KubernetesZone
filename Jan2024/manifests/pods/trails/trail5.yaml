@@ -11,9 +11,28 @@ spec:
       args:
         - sleep
         - 10s
+    - name: init2
+      image: alpine
+      args:
+        - sleep
+        - 10s
+    - name: init3
+      image: alpine
+      args:
+        - sleep
+        - 10s
   containers:
     - name: nginx
       image: nginx
+      resources:
+        limits:
+          cpu: 1000m
+          memory: 0.5Gi
+    - name: sidecar1
+      image: alpine
+      args:
+        - sleep
+        - 1d
       resources:
         limits:
           cpu: 1000m

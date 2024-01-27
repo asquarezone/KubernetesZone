@@ -24,16 +24,8 @@ spec:
   containers:
     - name: nginx
       image: nginx
-      resources:
-        limits:
-          cpu: 1000m
-          memory: 0.5Gi
     - name: sidecar1
       image: alpine
       args:
         - sleep
         - 1d
-      resources:
-        limits:
-          cpu: 1000m
-          memory: 0.5Gi

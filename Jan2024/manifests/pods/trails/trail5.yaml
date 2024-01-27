@@ -1,0 +1,20 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: trail5
+spec:
+  restartPolicy: OnFailure
+  initContainers:
+    - name: init1
+      image: alpine
+      args:
+        - sleep
+        - 10s
+  containers:
+    - name: nginx
+      image: nginx
+      resources:
+        limits:
+          cpu: 1000m
+          memory: 0.5Gi

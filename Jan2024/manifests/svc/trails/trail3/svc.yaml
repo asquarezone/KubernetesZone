@@ -1,0 +1,12 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: spc-svc
+spec:
+  type: NodePort
+  ports:
+    - name: spc
+      nodePort: 31000
+      port: 8080
+      targetPort: 8080

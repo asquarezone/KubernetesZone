@@ -1,0 +1,24 @@
+---
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: spc-rs
+spec:
+  minReadySeconds: 10
+  replicas: 3
+  selector:
+    matchLabels:
+      app: spc
+  template:
+    metadata:
+      labels:
+        app: spc
+        env: dev
+        version: v3.4.0
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: spc
+          image: shaikkhajaibrahim/spcjan2024:1.0
+          ports:
+            - containerPort: 8080

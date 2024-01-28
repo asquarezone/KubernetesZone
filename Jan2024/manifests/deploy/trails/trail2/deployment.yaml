@@ -1,0 +1,32 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: trail2-deploy
+spec:
+  minReadySeconds: 30
+  progressDeadlineSeconds: 600
+  replicas: 10
+  selector:
+    matchLabels:
+      app: jenkins
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 40%
+      maxUnavailable: 40%
+  template:
+    metadata:
+      labels:
+        app: jenkins
+        ver: "v1.0"
+    spec:
+      containers:
+        - name: jenkins
+          image: jenkins/jenkins:jdk-11
+          resources:
+            limits:
+              cpu: 2000m
+              memory: 2Gi
+          ports:
+            - containerPort: 8080

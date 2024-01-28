@@ -25,7 +25,3 @@ spec:
           image: nginx
           ports:
             - containerPort: 80
-          resources:
-            limits:
-              memory: 256Mi
-              cpu: 500m

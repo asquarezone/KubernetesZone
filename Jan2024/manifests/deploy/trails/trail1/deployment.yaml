@@ -18,10 +18,10 @@ spec:
     metadata:
       labels:
         app: web
-        version: "v1.0"
+        version: "v1.1"
     spec:
       containers:
         - name: web
-          image: nginx
+          image: httpd
           ports:
             - containerPort: 80

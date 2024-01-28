@@ -9,6 +9,12 @@ spec:
   minReadySeconds: 1
   replicas: 3
   selector:
+    matchExpressions:
+      - key: activity
+        operator: In
+        values:
+          - exercise1
+          - exercise2
   template:
     metadata:
       labels:
@@ -17,4 +23,4 @@ spec:
       containers:
         - name: incoma
           image: alpine
-          
+

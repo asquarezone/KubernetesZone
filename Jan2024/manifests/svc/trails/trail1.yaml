@@ -16,6 +16,7 @@ spec:
       labels:
         app: nginx
         version: v1.0
+        env: dev
     spec:
       containers:
         - name: nginx
@@ -30,7 +31,7 @@ metadata:
   name: nginx-svc
 spec:
   selector:
-    app: nginx
+    env: dev
   ports:
     - name: nginx-port
       targetPort: 80

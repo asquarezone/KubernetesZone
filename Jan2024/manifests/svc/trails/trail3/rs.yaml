@@ -16,7 +16,7 @@ spec:
         env: dev
         version: v3.4.0
     spec:
-      restartPolicy: OnFailure
+      restartPolicy: Always
       containers:
         - name: spc
           image: shaikkhajaibrahim/spcjan2024:1.0

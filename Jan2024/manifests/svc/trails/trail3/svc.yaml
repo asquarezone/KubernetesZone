@@ -6,7 +6,7 @@ metadata:
 spec:
   type: NodePort
   selector:
-    app: svc
+    app: spc
   ports:
     - name: spc
       nodePort: 31000

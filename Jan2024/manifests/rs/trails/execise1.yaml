@@ -1,0 +1,20 @@
+---
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: exercise1
+  labels:
+    app: exercise1
+spec:
+  minReadySeconds: 1
+  replicas: 3
+  selector:
+  template:
+    metadata:
+      labels:
+        activity: exercise1
+    spec:
+      containers:
+        - name: incoma
+          image: alpine
+          

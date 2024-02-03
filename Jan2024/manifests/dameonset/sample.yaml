@@ -1,0 +1,19 @@
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: sample-ds
+spec:
+  minReadySeconds: 10
+  selector:
+    matchLabels:
+      app: ds
+  template:
+    metadata:
+      labels:
+        app: ds
+        version: "v1.0"
+    spec:
+      containers:
+        - name: logcollector
+          image: nginx

@@ -26,6 +26,9 @@ spec:
               value: example
           ports:
             - containerPort: 27017
+          volumeMounts:
+            - name: data
+              mountPath: /data/db
   volumeClaimTemplates:
     - metadata:
         name: data

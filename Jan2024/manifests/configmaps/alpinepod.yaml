@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: alpine
+  labels:
+    name: alpine
+spec:
+  containers:
+  - name: alpine
+    image: alpine
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    args:
+      - sleep
+      - 1d
+    env:
+      - name: learn
+        valueFrom:
+          configMapKeyRef:
+            key: key1 
+            name: sample-cm

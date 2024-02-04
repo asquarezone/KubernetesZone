@@ -1,0 +1,52 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mysql
+  labels:
+    app: db
+spec:
+  volumes:
+    - name: cm-vol
+      configMap:
+        name: mysql-cm
+    - name: secret-vol
+      secret:
+        secretName: mysql-secret
+
+  containers:
+  - name: db
+    image: mysql:8.0-debian
+    resources:
+      limits:
+        memory: "1024Mi"
+        cpu: "1000m"
+    ports:
+      - containerPort: 3306
+    volumeMounts:
+      - name: cm-vol
+        mountPath: /mnt
+      - name: secret-vol
+        mountPath: /secret
+    env:
+      - name: MYSQL_ROOT_PASSWORD
+        valueFrom:
+          configMapKeyRef:
+            name: mysql-cm
+            key: rootpassword 
+      - name: MYSQL_DATABASE
+        valueFrom:
+          configMapKeyRef:
+            name: mysql-cm
+            key: database
+      - name: MYSQL_USER
+        valueFrom:
+          configMapKeyRef:
+            name: mysql-cm
+            key: username
+      - name: MYSQL_PASSWORD
+        valueFrom:
+          configMapKeyRef:
+            name: mysql-cm
+            key: password
+    
+  

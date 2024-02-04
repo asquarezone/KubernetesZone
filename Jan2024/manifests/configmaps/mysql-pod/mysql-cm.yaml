@@ -1,0 +1,10 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-cm
+data:
+  username: devops
+  password: devops@123
+  database: employees
+  rootpassword: devops@12345

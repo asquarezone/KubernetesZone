@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mysql
+  labels:
+    app: db
+spec:
+  containers:
+  - name: db
+    image: mysql:8.0-debian
+    resources:
+      limits:
+        memory: "1024Mi"
+        cpu: "1000m"
+    ports:
+      - containerPort: 3306
+    env:
+      - name: MYSQL_ROOT_PASSWORD
+        value: admin123
+      - name: MYSQL_DATABASE
+        value: employees
+      - name: MYSQL_USER
+        value: devops
+      - name: MYSQL_PASSWORD
+        value: devops@123
+    volumeMounts:
+      - name: emp-vol
+        mountPath: /var/lib/mysql
+  volumes:
+    - name: emp-vol
+      persistentVolumeClaim:
+        claimName: emp
+        readOnly: false

@@ -1,0 +1,39 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: activity2
+  labels:
+    env: dev
+    topic: initcontainers
+spec:
+  initContainers:
+    - name: precondition1
+      image: alpine
+      args: 
+        - sleep
+        - 10s
+    - name: precondition2
+      image: alpine
+      args: 
+        - sleep
+        - 11s
+  containers:
+    - name: maincar
+      image: nginx
+      resources:
+        limits:
+          cpu: "500m"
+          memory: "128Mi"
+      ports:
+        - containerPort: 80
+    - name: sidecar1
+      image: alpine
+      args:
+        - sleep
+        - 1d
+      resources:
+        limits:
+          cpu: "500m"
+          memory: "128Mi"
+      

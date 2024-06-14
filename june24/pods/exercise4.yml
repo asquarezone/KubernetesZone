@@ -1,0 +1,25 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nop-db
+  labels:
+    app: nop-db
+    engine: postgres
+spec:
+  containers:
+    - name: nop-db
+      image: postgres:16
+      env:
+        - name: POSTGRES_PASSWORD
+          value: admin123
+        - name: POSTGRES_DB
+          value: nop
+        - name: POSTGRES_USER
+          value: ltdevops
+      resources:
+        limits:
+          memory: "512Mi"
+          cpu: "1000m"
+      ports:
+        - containerPort: 5432

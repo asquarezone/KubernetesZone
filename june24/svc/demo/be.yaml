@@ -26,6 +26,23 @@ spec:
           image: nginx
           ports:
             - containerPort: 80
+          livenessProbe:
+            failureThreshold: 1
+            successThreshold: 2
+            initialDelaySeconds: 1
+            periodSeconds: 5
+            httpGet:
+              path: /
+              port: 80
+          readinessProbe:
+            failureThreshold: 2
+            successThreshold: 1
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            httpGet:
+              path: /
+              port: 80
+
 
     
       

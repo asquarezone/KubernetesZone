@@ -1,0 +1,28 @@
+---
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: fe-rs
+  labels:
+    app: fe
+    topic: rs
+spec:
+  minReadySeconds: 2
+  replicas: 2
+  selector:
+    matchLabels:
+      app: fe
+  template:
+    metadata:
+      labels:
+        app: fe
+        topic: pod
+    spec:
+      containers:
+        - name: fe-cont
+          image: nginx
+          ports:
+            - containerPort: 80
+
+    
+      

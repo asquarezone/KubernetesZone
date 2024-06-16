@@ -1,0 +1,39 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-deploy
+spec:
+  minReadySeconds: 2
+  replicas: 4
+  selector:
+    matchLabels:
+      app: web
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+        - name: app
+          image: shaikkhajaibrahim/dmtest:1.0
+          resources:
+            limits:
+              cpu: 250m
+              memory: 128Mi
+          ports:
+            - containerPort: 80
+              protocol: "TCP"
+          readinessProbe:
+            initialDelaySeconds: 3
+            periodSeconds: 5
+            successThreshold: 3
+            failureThreshold: 2
+            httpGet:
+              path: '/'
+              port: 80

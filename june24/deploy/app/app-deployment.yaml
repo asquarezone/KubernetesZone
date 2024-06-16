@@ -18,10 +18,11 @@ spec:
     metadata:
       labels:
         app: web
+        version: v2.0
     spec:
       containers:
         - name: app
-          image: shaikkhajaibrahim/dmtest:1.0
+          image: shaikkhajaibrahim/dmtest:2.0
           resources:
             limits:
               cpu: 250m

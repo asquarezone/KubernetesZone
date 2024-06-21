@@ -1,0 +1,10 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nop-cm
+data:
+  MYSQL_ROOT_PASSWORD: admin123
+  MYSQL_USER: nop
+  MYSQL_PASSWORD: nop123
+  MYSQL_DATABASE: nop

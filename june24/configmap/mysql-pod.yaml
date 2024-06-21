@@ -1,0 +1,12 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nopdb
+spec:
+  containers:
+    - name: nopdb
+      image: mysql:8.0-debian
+      envFrom:
+        - configMapRef:
+            name: nop-cm

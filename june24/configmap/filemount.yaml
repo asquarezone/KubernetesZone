@@ -1,0 +1,19 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: filemountpod
+spec:
+  containers:
+    - name: experiment
+      image: alpine
+      args:
+        - sleep
+        - 1d
+      volumeMounts:
+        - name: configvolume
+          mountPath: /config
+  volumes:
+    - name: configvolume
+      configMap:
+        name: nop-cm

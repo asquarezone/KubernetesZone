@@ -1,0 +1,21 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: envmountpod
+spec:
+  containers:
+    - name: experiment
+      image: alpine
+      args:
+        - sleep
+        - 1d
+      env:
+        - name: TEST_OPTION_1
+          valueFrom:
+            configMapKeyRef:
+              key: MYSQL_ROOT_PASSWORD
+              name: nop-cm
+      envFrom:
+        - configMapRef:
+            name: nop-cm

@@ -1,0 +1,24 @@
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: fluentd-ds
+spec:
+  minReadySeconds: 5
+  selector:
+    matchLabels:
+      app: fluentd
+  template:
+    metadata:
+      labels:
+        app: fluentd
+        env: dev
+    spec:
+      containers:
+        - name: fluentd
+          image: fluent/fluentd:v1.3-debian-1
+          ports:
+            - containerPort: 24224
+              protocol: TCP
+            - containerPort: 24224
+              protocol: UDP

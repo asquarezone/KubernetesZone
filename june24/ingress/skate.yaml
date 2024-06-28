@@ -1,0 +1,40 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: skate-deploy
+spec:
+  minReadySeconds: 2
+  replicas: 2
+  selector:
+    matchLabels:
+      app: skate
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+  template:
+    metadata:
+      labels:
+        app: skate
+        version: v2.0
+    spec:
+      containers:
+        - name: skate
+          image: kumar1502/skateboard:1.0
+          ports:
+            - containerPort: 80
+              protocol: "TCP"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: skate-svc
+spec:
+  selector:
+    app: skate
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP

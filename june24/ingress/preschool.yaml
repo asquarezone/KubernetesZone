@@ -1,0 +1,40 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: preschool-deploy
+spec:
+  minReadySeconds: 2
+  replicas: 2
+  selector:
+    matchLabels:
+      app: preschool
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+  template:
+    metadata:
+      labels:
+        app: preschool
+        version: v2.0
+    spec:
+      containers:
+        - name: preschool
+          image: panky7700/preschool:1.1
+          ports:
+            - containerPort: 80
+              protocol: "TCP"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: preschool-svc
+spec:
+  selector:
+    app: preschool
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP

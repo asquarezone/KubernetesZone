@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: activity-2
+spec:
+  containers:
+    - name: web
+      image: nginx:1.27
+    - name: sidecar
+      image: alpine
+      args: # cmd
+        - sleep
+        - 1d

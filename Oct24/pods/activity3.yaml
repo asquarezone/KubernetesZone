@@ -7,3 +7,6 @@ spec:
   containers:
     - name: suicidal
       image: alpine
+      args:
+        - sleep
+        - 15s

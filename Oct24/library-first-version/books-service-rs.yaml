@@ -1,0 +1,47 @@
+---
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: books-svc-rs
+spec:
+  minReadySeconds: 5
+  replicas: 1
+  selector:
+    matchLabels:
+      app: books-svc
+  template:
+    metadata:
+      labels:
+        app: books-svc
+    spec:
+      containers:
+        - name: books-service
+          image: shaikkhajaibrahim/libbookssvc:1.0
+          resources:
+            requests:
+              memory: 24M
+              cpu: 100m
+            limits:
+              memory: 128M
+              cpu: 500m
+          env:
+            - name: SECRET_KEY
+              value: 'YtDEVWnL35aAIP-5yxeLjAZ49R920-mMNDfwPyWULu63HFsYzo0f-LO2InxC8eu428k'
+            - name: DATABASE_URL
+              value: "postgresql://user:password@books-db:5432/booksdb"
+          ports:
+            - containerPort: 8000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: books-svc
+spec:
+  type: ClusterIP
+  selector:
+    app: books-svc
+  ports:
+  - port: 8000
+    targetPort: 8000
+
+            

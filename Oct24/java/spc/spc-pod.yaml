@@ -10,6 +10,13 @@ spec:
   containers:
     - name: spcapp
       image: shaikkhajaibrahim/spcjan2024:1.0
+      resources:
+        requests:
+          cpu: 250m
+          memory: 64M
+        limits:
+          cpu: 500m
+          memory: 256M
       ports:
         - containerPort: 8080
           protocol: TCP

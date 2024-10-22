@@ -15,3 +15,13 @@ spec:
           value: admin
         - name: PASSWORD
           value: admin@123
+    - name: test1
+      image: alpine
+      args:
+        - sleep
+        - 1d
+      env:
+        - name: USERNAME
+          value: admin1
+        - name: PASSWORD
+          value: admin@1234

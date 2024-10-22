@@ -1,0 +1,13 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: web
+  labels:
+    env: dev
+    app: web
+    release: v1.6.9
+spec:
+  containers:
+    - name: web
+      image: nginx:1.27

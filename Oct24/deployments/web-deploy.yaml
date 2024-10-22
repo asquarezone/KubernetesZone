@@ -3,6 +3,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: web-deploy
+  annotations:
+    kubernetes.io/change-cause: "version v1.0"
 spec:
   minReadySeconds: 1
   replicas: 4

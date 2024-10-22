@@ -41,6 +41,7 @@ kind: Service
 metadata:
   name: web-sv
 spec:
+  type: NodePort
   selector:
     app: web
   ports:

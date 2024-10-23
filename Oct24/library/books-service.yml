@@ -27,8 +27,8 @@ spec:
               memory: 128M
               cpu: 500m
           envFrom:
-            - configMapRef:
-                name: books-svc-config
+            - secretRef:
+                name: books-svc-secrets
           ports:
           - containerPort: 8000
 ---

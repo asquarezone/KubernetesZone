@@ -20,8 +20,8 @@ spec:
         - image: postgres:15-alpine
           name: usersdb
           envFrom:
-            - configMapRef:
-                name: users-db-config
+            - secretRef:
+                name: users-db-secrets
           resources:
             requests:
               memory: 24M

@@ -1,0 +1,24 @@
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: transaction-cron
+spec:
+  schedule: "* * * * *"
+  jobTemplate:
+    metadata:
+      labels:
+        app: tx-checker
+    spec:
+      template:
+        metadata:
+          labels:
+            app: tx-checker
+        spec:
+          containers:
+            - name: tx-checker
+              image: alpine
+              args: # replace with script that does the job
+                - sleep
+                - 30s
+          restartPolicy: OnFailure

@@ -1,0 +1,39 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: preschool-deploy
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: preschool
+  template:
+    metadata:
+      labels:
+        app: preschool
+    spec:
+      containers:
+      - name: preschool
+        image: shaikkhajaibrahim/preschool:1.1
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: preschool-svc
+spec:
+  selector:
+    app: preschool
+  ports:
+  - port: 80
+    targetPort: 80
+

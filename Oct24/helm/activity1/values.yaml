@@ -1,0 +1,27 @@
+---
+namespace: dev
+replicas: 3
+image:
+  name: "nginx"
+  tag: "1.27"
+resources:
+  requests:
+    memory: "64Mi"
+    cpu: "100m"
+  limits:
+    memory: "128Mi"
+    cpu: "250m"
+ports:
+  containerPort: 80
+  servicePort: 80
+labels:
+  app: nginx
+  version: v1.x
+selector:
+  app: nginx
+
+service:
+  name: nginx-svc
+  type: ClusterIP
+
+  

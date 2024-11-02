@@ -1,0 +1,16 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.service.name }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+  - port: {{ .Values.ports.containerPort }}
+    targetPort: {{ .Values.ports.servicePort }}
+    protocol: TCP
+    name: {{ .Values.service.name }}
+  selector: {{ .Values.selector | toYaml | nindent 4}}

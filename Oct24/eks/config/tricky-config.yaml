@@ -1,0 +1,28 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: my-eks-cluster      # Replace with your cluster name
+  region: us-west-2         # Replace with your desired AWS region
+
+vpc:
+  subnets:
+    private:
+      us-west-2a: { id: subnet-xxxxxxxx }  # Replace with your private subnet ID
+      us-west-2b: { id: subnet-yyyyyyyy }  # Replace with your private subnet ID
+    public:
+      us-west-2a: { id: subnet-zzzzzzzz }   # Replace with your public subnet ID
+      us-west-2b: { id: subnet-aaaaaaaa }   # Replace with your public subnet ID
+
+nodeGroups:
+  - name: ng-1                 # Name of the node group
+    instanceType: m5.large     # Instance type for the nodes
+    desiredCapacity: 3          # Desired number of nodes
+    volumeSize: 20              # Volume size in GiB
+    ssh:
+      allow: true               # Allow SSH access to the nodes
+      publicKeyName: my-keypair # Replace with your SSH key pair name
+
+iam:
+  withAddonPolicies:
+    autoScaler: true            # Enable Cluster Autoscaler

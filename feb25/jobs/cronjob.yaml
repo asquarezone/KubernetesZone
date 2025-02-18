@@ -1,0 +1,25 @@
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: cron-demo
+spec:
+  schedule: '*/2 * * * *'
+  jobTemplate:
+    metadata:
+      name: dummy-job
+    spec:
+      template:
+        metadata:
+          name: dummy-po
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: alp
+              image: alpine
+              command:
+                - sleep
+                - 60s
+      
+        
+

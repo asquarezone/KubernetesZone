@@ -5,6 +5,8 @@ metadata:
   name: web
   labels:
     app: web
+  annotations:
+    kubernetes.io/change-cause: "version 2 Deployment"
 spec:
   minReadySeconds: 5
   replicas: 4

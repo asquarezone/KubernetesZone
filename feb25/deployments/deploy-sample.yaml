@@ -22,11 +22,11 @@ spec:
       labels:
         app: web
         tier: frontend
-        version: v1
+        version: v2
     spec:
       containers:
         - name: web
-          image: shaikkhajaibrahim/dmtest:1.0
+          image: shaikkhajaibrahim/dmtest:2.0
           resources:
             limits:
               memory: 128M

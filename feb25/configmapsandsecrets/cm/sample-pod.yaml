@@ -7,12 +7,20 @@ metadata:
     name: alpine
 spec:
   containers:
-  - name: alpine
-    image: alpine
-    command:
-      - sleep
-      - 1d
-    envFrom:
-      - configMapRef:
-          name: sample-cm
+    - name: alpine
+      image: alpine
+      command:
+        - sleep
+        - 1d
+      envFrom:
+        - configMapRef:
+            name: sample-cm
+      volumeMounts:
+        - name: cm
+          mountPath: /config
+  volumes:
+    - name: cm
+      configMap:
+        name: sample-cm
+    
     

@@ -9,7 +9,7 @@ metadata:
     kubernetes.io/change-cause: "version 2 Deployment"
 spec:
   minReadySeconds: 5
-  replicas: 4
+  replicas: 8
   selector:
     matchLabels:
       app: web

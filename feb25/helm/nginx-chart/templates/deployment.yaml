@@ -8,7 +8,8 @@ spec:
   selector:
     matchLabels: {{ .Values.labels | toYaml | nindent 6}}
   template:
-    metadata: {{ .Values.labels | toYaml | nindent 6 }}
+    metadata: 
+      labels: {{ .Values.labels | toYaml | nindent 8 }}
     spec:
       containers:
       - name: {{ .Values.name }}

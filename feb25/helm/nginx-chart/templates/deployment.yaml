@@ -2,26 +2,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: web
+  name: {{ .Values.name }}
 spec:
-  replicas: 3
+  replicas: {{ .Values.replicas }}
   selector:
-    matchLabels:
-      app: web
+    matchLabels: {{ .Values.labels | toYaml | nindent 6}}
   template:
-    metadata:
-      labels:
-        app: web
+    metadata: {{ .Values.labels | toYaml | nindent 6 }}
     spec:
       containers:
-      - name: web
-        image: nginx:1.27
-        resources:
-          requests:
-            memory: "64Mi"
-            cpu: "100m"
-          limits:
-            memory: "128Mi"
-            cpu: "500m"
+      - name: {{ .Values.name }}
+        image: {{ .Values.image.name }}:{{ .Values.image.tag }}
+        resources: {{ .Values.resources | toYaml | nindent 10 }}
+          
         ports:
-        - containerPort: 80
+        - containerPort: {{ .Values.port }}

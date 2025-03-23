@@ -1,0 +1,25 @@
+---
+name: web
+replicas: 3
+labels:
+  app: web
+  version: v1
+image:
+  name: nginx
+  tag: 1.27
+port: 80
+service:
+  type: NodePort
+  name: web
+  selector:
+    app: web
+    version: v1
+  port: 80
+  targetPort: 80
+resources:
+  requests:
+    memory: "64Mi"
+    cpu: "100m"
+  limits:
+    memory: "128Mi"
+    cpu: "500m"

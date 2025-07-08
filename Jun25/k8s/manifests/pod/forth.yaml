@@ -1,0 +1,18 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: forth
+spec:
+  containers:
+    - name: mysql
+      image: mysql:latest
+      env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: qtdevops
+        - name: MYSQL_USER
+          value: qtdevops
+        - name: MYSQL_PASSWORD
+          value: qtdevops
+        - name: MYSQL_DATABASE
+          value: nop

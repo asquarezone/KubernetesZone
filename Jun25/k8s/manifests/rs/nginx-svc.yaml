@@ -1,0 +1,28 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-internal
+spec:
+  type: ClusterIP
+  selector:
+    app: web
+  ports:
+    - name: web
+      port: 80
+      targetPort: 80
+      protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-lb
+spec:
+  type: LoadBalancer
+  selector:
+    app: web
+  ports:
+    - name: web
+      port: 80
+      targetPort: 80
+      protocol: TCP

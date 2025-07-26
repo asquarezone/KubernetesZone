@@ -2,12 +2,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: nginx-service
+  name: {{ .Values.service.name }}
 spec:
-  type: LoadBalancer
+  type: {{ .Values.service.type }}
   selector:
     app: nginx
   ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 80
+  - protocol: {{ .Values.service.port.protocol }}
+    port: {{ .Values.service.port.port }}
+    targetPort: {{ .Values.service.port.targetPort }}

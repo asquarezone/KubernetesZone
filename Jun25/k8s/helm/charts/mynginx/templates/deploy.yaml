@@ -1,11 +1,12 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-deployment
+  name: {{ .Values.deployment.name }}
   labels:
     app: nginx
 spec:
-  replicas: 3
+  replicas: {{ .Values.deployment.replicas }}
   selector:
     matchLabels:
       app: nginx
@@ -16,7 +17,7 @@ spec:
     spec:
       containers:
       - name: nginx-container
-        image: nginx:latest
+        image: {{ .Values.deployment.image }}
         ports:
-        - containerPort: 80
+        - containerPort: {{ .Values.deployment.containerPort }}
 

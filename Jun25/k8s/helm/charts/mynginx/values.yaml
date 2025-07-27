@@ -1,14 +1,21 @@
+selector: 
+  app: nginx
 service:
   name: nginx-svc
-  type: LoadBalancer
-  selector: 
-    app: nginx
-  port:
-    protocol: TCP
-    port: 80
-    targetPort: 80
+  type: LoadBalancer  
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+    - protocol: TCP
+      port: 443
+      targetPort: 443
 deployment:
   name: nginx-deploy
   replicas: 2
   image: nginx:latest
   containerPort: 80
+  labels:
+    app: nginx
+    env: dev
+    version: v1

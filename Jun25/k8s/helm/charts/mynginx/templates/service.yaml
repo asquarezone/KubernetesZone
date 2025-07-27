@@ -6,7 +6,7 @@ metadata:
 spec:
   type: {{ .Values.service.type }}
   selector: {{ .Values.selector | toYaml | nindent 4 }}
-  ports:
-  - protocol: {{ .Values.service.port.protocol }}
-    port: {{ .Values.service.port.port }}
-    targetPort: {{ .Values.service.port.targetPort }}
+  ports: 
+  {{- range .Values.service.ports }}
+    - {{ . | toYaml  | indent 6 | trim }}
+  {{- end }}

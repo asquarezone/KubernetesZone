@@ -5,8 +5,7 @@ metadata:
   name: {{ .Values.service.name }}
 spec:
   type: {{ .Values.service.type }}
-  selector:
-    app: nginx
+  selector: {{ .Values.selector | toYaml | nindent 4 }}
   ports:
   - protocol: {{ .Values.service.port.protocol }}
     port: {{ .Values.service.port.port }}

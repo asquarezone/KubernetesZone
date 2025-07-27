@@ -3,17 +3,14 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Values.deployment.name }}
-  labels:
-    app: nginx
+  labels: {{ .Values.deployment.labels | toYaml | nindent 4 }}
 spec:
   replicas: {{ .Values.deployment.replicas }}
   selector:
-    matchLabels:
-      app: nginx
+    matchLabels: {{ .Values.selector | toYaml  | nindent 6 }}
   template:
     metadata:
-      labels:
-        app: nginx
+      labels: {{ .Values.deployment.labels | toYaml | nindent 8}}
     spec:
       containers:
       - name: nginx-container

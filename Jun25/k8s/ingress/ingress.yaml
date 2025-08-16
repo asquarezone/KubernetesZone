@@ -1,0 +1,24 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: portal-ing
+spec:
+  ingressClassName: nginx
+  rules:
+    - http:
+        paths:
+          - path: /preschool
+            pathType: Prefix
+            backend:
+              service:
+                name: preschool
+                port: 
+                  number: 80
+          - path: /skate
+            pathType: Prefix
+            backend:
+              service:
+                name: skate
+                port: 
+                  number: 80

@@ -1,0 +1,37 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: dummy-sts
+spec:
+  serviceName: headless
+  replicas: 3
+  minReadySeconds: 1
+  selector:
+    matchLabels:
+      app: dummy
+  template:
+    metadata:
+      labels:
+        app: dummy
+    spec:
+      containers:
+        - name: dummy
+          image: nginx
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - mountPath: /mnt
+              name: dummy-storage
+              readOnly: false
+  volumeClaimTemplates:
+    - metadata:
+        name: dummy-storage
+      spec:
+        resources:
+          requests:
+            storage: 1Gi
+        storageClassName: default
+        accessModes:
+          - ReadWriteOnce
+        

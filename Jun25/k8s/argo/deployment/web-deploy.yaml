@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
         - name: web
-          image: httpd:2-alpine
+          image: nginx
           resources:
             requests:
               cpu: 100m

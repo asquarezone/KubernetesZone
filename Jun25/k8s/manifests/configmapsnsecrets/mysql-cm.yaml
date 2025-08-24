@@ -1,0 +1,10 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-cm
+data:
+  MYSQL_ROOT_PASSWORD: qwerty456
+  MYSQL_DATABASE: sales
+  MYSQL_USER: ltdevops
+  MYSQL_PASSWORD: qwerty456

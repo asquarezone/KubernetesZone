@@ -4,7 +4,7 @@ kind: Deployment
 metadata:
   name: web-deploy
   annotations:
-    kubernetes.io/change-cause: v1 deployment
+    kubernetes.io/change-cause: v2 deployment to slim version
 spec:
   minReadySeconds: 5
   replicas: 4
@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
         - name: web
-          image: nginx:1.29
+          image: httpd:2-alpine
           resources:
             requests:
               cpu: 100m
@@ -40,4 +40,28 @@ spec:
             - name: http
               protocol: TCP
               containerPort: 80
+          startupProbe:
+            initialDelaySeconds: 1
+            periodSeconds: 2
+            successThreshold: 1
+            failureThreshold: 2
+            tcpSocket:
+              port: 80
+          livenessProbe:
+            initialDelaySeconds: 2
+            periodSeconds: 5
+            successThreshold: 1
+            failureThreshold: 2
+            httpGet:
+              path: /
+              port: 80
+          readinessProbe:
+            initialDelaySeconds: 2
+            periodSeconds: 5
+            successThreshold: 1
+            failureThreshold: 2
+            timeoutSeconds: 5
+            httpGet:
+              path: /
+              port: 80
           

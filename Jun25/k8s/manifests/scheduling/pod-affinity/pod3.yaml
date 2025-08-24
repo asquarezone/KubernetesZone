@@ -1,0 +1,25 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod3
+  labels:
+    app: pod3
+spec:
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - topologyKey: kubernetes.io/hostname
+          labelSelector:
+            matchLabels:
+              app: pod1 
+  containers:
+    - name: web
+      image: nginx
+      resources:
+        requests:
+          cpu: 100m
+          memory: 10M
+        limits:
+          cpu: 500m
+          memory: 128M

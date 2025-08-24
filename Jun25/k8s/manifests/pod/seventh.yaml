@@ -1,0 +1,60 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: one
+  labels:
+    app: nginx
+    env: dev
+    project: learning
+spec:
+  containers:
+    - name: web
+      image: nginx
+      resources:
+        requests:
+          cpu: 100m
+          memory: 10M
+        limits:
+          cpu: 500m
+          memory: 128M
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: two
+  labels:
+    app: nginx
+    env: qa
+    project: learning
+spec:
+  containers:
+    - name: web
+      image: nginx
+      resources:
+        requests:
+          cpu: 100m
+          memory: 10M
+        limits:
+          cpu: 500m
+          memory: 128M
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: three
+  labels:
+    app: nginx
+    env: uat
+    project: learning
+spec:
+  containers:
+    - name: web
+      image: nginx
+      resources:
+        requests:
+          cpu: 100m
+          memory: 10M
+        limits:
+          cpu: 500m
+          memory: 128M

@@ -1,0 +1,21 @@
+---
+# Source: template/templates/tests/test-connection.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "my-release-template-test-connection"
+  labels:
+    helm.sh/chart: template-0.1.0
+    app.kubernetes.io/name: template
+    app.kubernetes.io/instance: my-release
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['my-release-template:80']
+  restartPolicy: Never

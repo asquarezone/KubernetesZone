@@ -1,0 +1,19 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: cm-pod-demo
+spec:
+  containers:
+    - name: test 
+      image: alpine
+      command:
+        - sleep
+        - 1d
+      volumeMounts:
+        - name: cm-vol
+          mountPath: /config
+  volumes:
+    - name: cm-vol
+      configMap:
+        name: mysql-cm

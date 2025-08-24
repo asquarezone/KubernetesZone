@@ -1,0 +1,17 @@
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+  name: web-virtual-service
+spec:
+  hosts:
+  - my-web.default.svc.cluster.local
+  http:
+  - route:
+    - destination:
+        host: my-web.default.svc.cluster.local
+        subset: httpd
+      weight: 20
+    - destination:
+        host: my-web.default.svc.cluster.local
+        subset: nginx
+      weight: 80

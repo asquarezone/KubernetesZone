@@ -1,0 +1,16 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sixth
+spec:
+  containers:
+    - name: web
+      image: nginx
+      resources:
+        requests:
+          cpu: 100m
+          memory: 10M
+        limits:
+          cpu: 500m
+          memory: 128M

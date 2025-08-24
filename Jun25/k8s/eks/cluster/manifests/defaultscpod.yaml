@@ -1,0 +1,38 @@
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mysql
+  labels:
+    app: mysql
+spec:
+  containers:
+    - name: mysql
+      image: mysql:9
+      env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: "password"
+      ports:
+        - containerPort: 3306
+      volumeMounts:
+        - mountPath: /var/lib/mysql
+          name: mysqlvol
+          readOnly: false
+  volumes:
+    - name: mysqlvol
+      persistentVolumeClaim:
+        claimName: mysql-pvc
+        readOnly: false
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: gp3

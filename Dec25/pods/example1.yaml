@@ -1,0 +1,17 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: example-1
+  labels:
+    app: httpd
+    purpose: learning
+    env: dev
+spec:
+  containers:
+    - name: httpd
+      image: httpd:latest
+      ports:
+        - name: httpd
+          protocol: TCP
+          containerPort: 80

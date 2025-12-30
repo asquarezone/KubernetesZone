@@ -1,0 +1,18 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: example-3
+  labels:
+    app: web
+    purpose: multi-container
+spec:
+  containers: 
+    - name: nginx
+      image: nginx:latest
+      ports:
+        - containerPort: 80
+    - name: tomcat
+      image: tomcat:latest
+      ports:
+        - containerPort: 8080

@@ -1,0 +1,25 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: example-4
+  labels:
+    purpose: init-container-demo
+    app: nginx
+spec:
+  initContainers:
+    - name: init-0
+      image: alpine
+      command: 
+        - sleep
+        - "3s"
+    - name: init-1
+      image: alpine
+      command:
+        - sleep
+        - "4s"
+  containers:
+    - name: nginx
+      image: nginx:latest
+      ports:
+        - containerPort: 80

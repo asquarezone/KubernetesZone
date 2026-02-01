@@ -1,0 +1,17 @@
+service:
+  name: nginx-service
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 80
+labels:
+  app: nginx
+  version: v1
+name: nginx
+replicas: 3
+container:
+  name: nginx
+  image: nginx
+  tag: 1.19.0
+  ports:
+    - containerPort: 80

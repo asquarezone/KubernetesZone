@@ -1,0 +1,21 @@
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: example-1
+spec:
+  minReadySeconds: 2
+  selector:
+    matchLabels:
+      app: logagent
+  template:
+    metadata:
+      labels:
+        app: logagent
+    spec:
+      containers:
+        - name: logagent
+          image: alpine:latest
+          command:
+            - sleep
+            - "3600s"

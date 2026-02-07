@@ -1,0 +1,16 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mysql-pod
+  labels:
+    app: mysql
+spec:
+  containers:
+    - name: mysql
+      image: mysql:5.7
+      envFrom:
+        - secretRef: 
+            name: mysql-secret
+      ports:
+        - containerPort: 3306

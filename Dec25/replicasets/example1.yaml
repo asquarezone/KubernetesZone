@@ -1,0 +1,28 @@
+---
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: example-1
+  labels:
+    purpose: learning
+spec:
+  replicas: 4
+  minReadySeconds: 2
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+        env: dev
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.14.2
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 80

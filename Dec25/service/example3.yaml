@@ -1,0 +1,46 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: example-3
+  labels:
+    app: web
+  annotations:
+    kubernetes.io/change-cause: "nginx"
+spec:
+  minReadySeconds: 5
+  replicas: 4
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: web
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+  template:
+    metadata:
+      labels:
+        app: web
+        env: dev
+    spec:
+      containers:
+        - name: web
+          image: nginx
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ex3-svc
+spec:
+  type: LoadBalancer
+  selector:
+    app: web
+  ports:
+    - name: web
+      port: 80
+      targetPort: 80
+      protocol: TCP

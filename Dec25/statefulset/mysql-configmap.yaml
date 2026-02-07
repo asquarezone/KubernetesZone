@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-config
+data:
+  master.cnf: |
+    [mysqld]
+    log-bin=mysql-bin
+    server-id=1
+    binlog-do-db=myapp
+  slave.cnf: |
+    [mysqld]
+    server-id=2
+    relay-log=mysql-relay-bin
+    log-bin=mysql-bin
+    binlog-do-db=myapp
+    read-only=1

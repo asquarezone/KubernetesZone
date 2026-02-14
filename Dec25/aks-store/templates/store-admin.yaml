@@ -1,54 +1,28 @@
 ---
+{{- with .Values.apps.storeAdmin }}
 apiVersion: apps/v1
-kind: Deployment
+kind: {{ .kind }}
 metadata:
-  name: store-admin
+  name: {{ .name }}
 spec:
-  replicas: 1
+  replicas: {{ .replicas }}
   selector:
-    matchLabels:
-      app: store-admin
+    matchLabels: {{ .selector | toYaml | nindent 6 }}
   template:
     metadata:
-      labels:
-        app: store-admin
+      labels: {{ .labels | toYaml | nindent 8 }}
     spec:
       nodeSelector:
         "kubernetes.io/os": linux
       containers:
         - name: store-admin
-          image: ghcr.io/azure-samples/aks-store-demo/store-admin:2.1.0
-          ports:
-            - containerPort: 8081
-              name: store-admin
-          resources:
-            requests:
-              cpu: 1m
-              memory: 200Mi
-            limits:
-              cpu: 1000m
-              memory: 512Mi
-          startupProbe:
-            httpGet:
-              path: /health
-              port: 8081
-            failureThreshold: 3
-            initialDelaySeconds: 5
-            periodSeconds: 5
-          readinessProbe:
-            httpGet:
-              path: /health
-              port: 8081
-            failureThreshold: 3
-            initialDelaySeconds: 3
-            periodSeconds: 5
-          livenessProbe:
-            httpGet:
-              path: /health
-              port: 8081
-            failureThreshold: 5
-            initialDelaySeconds: 3
-            periodSeconds: 3
+          image: {{ .container.image }}:{{ .container.tag }}
+          ports: {{ .container.ports | toYaml | nindent 12 }}
+          resources: {{ .container.resources | toYaml | nindent 12 }}
+          startupProbe: {{ .container.startupProbe | toYaml | nindent 12 }}
+          readinessProbe: {{ .container.readinessProbe | toYaml | nindent 12 }}
+          livenessProbe: {{ .container.livenessProbe | toYaml | nindent 12 }}
+{{- end }}
 ---
 {{- with .Values.services.storeAdmin }}
 apiVersion: v1

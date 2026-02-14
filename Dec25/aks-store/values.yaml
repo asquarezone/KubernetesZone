@@ -61,3 +61,209 @@ services:
         targetPort: 8080
     selector:
       app: store-front
+
+apps:
+  makeline:
+    name: makeline-service
+    kind: Deployment
+    replicas: 1
+    selector:
+      app: makeline-service
+    labels:
+      app: makeline-service
+    container:
+      image: ghcr.io/azure-samples/aks-store-demo/makeline-service
+      tag: 2.1.0
+      ports:
+        - containerPort: 3001
+      env:
+        - name: ORDER_QUEUE_URI
+          value: "amqp://rabbitmq:5672"
+        - name: ORDER_QUEUE_USERNAME
+          value: "username"
+        - name: ORDER_QUEUE_PASSWORD
+          value: "password"
+        - name: ORDER_QUEUE_NAME
+          value: "orders"
+        - name: ORDER_DB_URI
+          value: "mongodb://mongodb:27017"
+        - name: ORDER_DB_NAME
+          value: "orderdb"
+        - name: ORDER_DB_COLLECTION_NAME
+          value: "orders"
+  order:
+    name: order-service
+    kind: Deployment
+    replicas: 1
+    selector:
+      app: order-service
+    labels:
+      app: order-service
+    container:
+      image: ghcr.io/azure-samples/aks-store-demo/order-service
+      tag: 2.1.0
+      ports:
+        - containerPort: 3000
+      resources:
+        requests:
+          cpu: 1m
+          memory: 50Mi
+        limits:
+          cpu: 100m
+          memory: 256Mi
+      startupProbe:
+        httpGet:
+          path: /health
+          port: 3000
+        failureThreshold: 5
+        initialDelaySeconds: 20
+        periodSeconds: 10
+      readinessProbe:
+        httpGet:
+          path: /health
+          port: 3000
+        failureThreshold: 3
+        initialDelaySeconds: 3
+        periodSeconds: 5
+      livenessProbe:
+        httpGet:
+          path: /health
+          port: 3000
+        failureThreshold: 5
+        initialDelaySeconds: 3
+        periodSeconds: 3
+    initContainers:
+      - name: wait-for-rabbitmq
+        image: busybox:1.37.0
+        command:
+          - sh
+          - -c
+          - until nc -zv rabbitmq 5672; do echo waiting for rabbitmq; sleep 2; done;
+        resources:
+          requests:
+            cpu: 1m
+            memory: 50Mi
+          limits:
+            cpu: 100m
+            memory: 256Mi
+  product:
+    name: product-service
+    kind: Deployment
+    replicas: 1
+    selector:
+      app: product-service
+    labels:
+      app: product-service
+    container:
+      image: ghcr.io/azure-samples/aks-store-demo/product-service
+      tag: 2.1.0
+      ports:
+        - containerPort: 3002
+      env:
+        - name: AI_SERVICE_URL
+          value: "http://ai-service:5001/"
+      resources:
+        requests:
+          cpu: 1m
+          memory: 1Mi
+        limits:
+          cpu: 2m
+          memory: 20Mi
+      readinessProbe:
+        httpGet:
+          path: /health
+          port: 3002
+        failureThreshold: 3
+        initialDelaySeconds: 3
+        periodSeconds: 5
+      livenessProbe:
+        httpGet:
+          path: /health
+          port: 3002
+        failureThreshold: 5
+        initialDelaySeconds: 3
+        periodSeconds: 3
+  storeAdmin:
+    name: store-admin
+    kind: Deployment
+    replicas: 1
+    selector:
+      app: store-admin
+    labels:
+      app: store-admin
+    container:
+      image: ghcr.io/azure-samples/aks-store-demo/store-admin
+      tag: 2.1.0
+      ports:
+        - containerPort: 8081
+          name: store-admin
+      resources:
+        requests:
+          cpu: 1m
+          memory: 200Mi
+        limits:
+          cpu: 1000m
+          memory: 512Mi
+      startupProbe:
+        httpGet:
+          path: /health
+          port: 8081
+        failureThreshold: 3
+        initialDelaySeconds: 5
+        periodSeconds: 5
+      readinessProbe:
+        httpGet:
+          path: /health
+          port: 8081
+        failureThreshold: 3
+        initialDelaySeconds: 3
+        periodSeconds: 5
+      livenessProbe:
+        httpGet:
+          path: /health
+          port: 8081
+        failureThreshold: 5
+        initialDelaySeconds: 3
+        periodSeconds: 3
+  storeFront:
+    name: store-front
+    kind: Deployment
+    replicas: 1
+    selector:
+      app: store-front
+    labels:
+      app: store-front
+    container:
+      image: ghcr.io/azure-samples/aks-store-demo/store-front
+      tag: 2.1.0
+      ports:
+        - containerPort: 8080
+          name: store-front
+      resources:
+        requests:
+          cpu: 1m
+          memory: 200Mi
+        limits:
+          cpu: 1000m
+          memory: 512Mi
+      startupProbe:
+        httpGet:
+          path: /health
+          port: 8080
+        failureThreshold: 3
+        initialDelaySeconds: 5
+        periodSeconds: 5
+      readinessProbe:
+        httpGet:
+          path: /health
+          port: 8080
+        failureThreshold: 3
+        initialDelaySeconds: 3
+        periodSeconds: 3
+      livenessProbe:
+        httpGet:
+          path: /health
+          port: 8080
+        failureThreshold: 5
+        initialDelaySeconds: 3
+        periodSeconds: 3

@@ -17,72 +17,36 @@ data:
   ORDER_QUEUE_USERNAME: dXNlcm5hbWU=
   ORDER_QUEUE_PASSWORD: cGFzc3dvcmQ=
 ---
+{{- with .Values.apps.order }}
 apiVersion: apps/v1
-kind: Deployment
+kind: {{ .kind }}
 metadata:
-  name: order-service
+  name: {{ .name }}
 spec:
-  replicas: 1
+  replicas: {{ .replicas }}
   selector:
-    matchLabels:
-      app: order-service
+    matchLabels: {{ .selector | toYaml | nindent 6 }}
   template:
     metadata:
-      labels:
-        app: order-service
+      labels: {{ .labels | toYaml | nindent 8 }}
     spec:
       nodeSelector:
         "kubernetes.io/os": linux
       containers:
         - name: order-service
-          image: ghcr.io/azure-samples/aks-store-demo/order-service:2.1.0
-          ports:
-            - containerPort: 3000
+          image: {{ .container.image }}:{{ .container.tag }}
+          ports: {{ .container.ports | toYaml | nindent 12 }}
           envFrom:
             - configMapRef:
                 name: order-service-configs
             - secretRef:
                 name: order-service-secrets
-          resources:
-            requests:
-              cpu: 1m
-              memory: 50Mi
-            limits:
-              cpu: 100m
-              memory: 256Mi
-          startupProbe:
-            httpGet:
-              path: /health
-              port: 3000
-            failureThreshold: 5
-            initialDelaySeconds: 20
-            periodSeconds: 10
-          readinessProbe:
-            httpGet:
-              path: /health
-              port: 3000
-            failureThreshold: 3
-            initialDelaySeconds: 3
-            periodSeconds: 5
-          livenessProbe:
-            httpGet:
-              path: /health
-              port: 3000
-            failureThreshold: 5
-            initialDelaySeconds: 3
-            periodSeconds: 3
-      initContainers:
-        - name: wait-for-rabbitmq
-          image: busybox:1.37.0
-          command:
-            ["sh", "-c", "until nc -zv rabbitmq 5672; do echo waiting for rabbitmq; sleep 2; done;"]
-          resources:
-            requests:
-              cpu: 1m
-              memory: 50Mi
-            limits:
-              cpu: 100m
-              memory: 256Mi
+          resources: {{ .container.resources | toYaml | nindent 12 }}
+          startupProbe: {{ .container.startupProbe | toYaml | nindent 12 }}
+          readinessProbe: {{ .container.readinessProbe | toYaml | nindent 12 }}
+          livenessProbe: {{ .container.livenessProbe | toYaml | nindent 12 }}
+      initContainers: {{ .initContainers | toYaml | nindent 8 }}
+{{- end }}
 ---
 {{- with .Values.services.order }}
 apiVersion: v1

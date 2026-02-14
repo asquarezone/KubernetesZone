@@ -1,49 +1,32 @@
 ---
+{{- with .Values.apps.product }}
 apiVersion: apps/v1
-kind: Deployment
+kind: {{ .kind }}
 metadata:
-  name: product-service
+  name: {{ .name }}
 spec:
-  replicas: 1
+  replicas: {{ .replicas }}
   selector:
-    matchLabels:
-      app: product-service
+    matchLabels: {{ .selector | toYaml | nindent 6 }}
   template:
     metadata:
-      labels:
-        app: product-service
+      labels: {{ .labels | toYaml | nindent 8 }}
     spec:
       nodeSelector:
         "kubernetes.io/os": linux
       containers:
         - name: product-service
-          image: ghcr.io/azure-samples/aks-store-demo/product-service:2.1.0
-          ports:
-            - containerPort: 3002
+          image: {{ .container.image }}:{{ .container.tag }}
+          ports: {{ .container.ports | toYaml | nindent 12 }}
           env:
-            - name: AI_SERVICE_URL
-              value: "http://ai-service:5001/"
-          resources:
-            requests:
-              cpu: 1m
-              memory: 1Mi
-            limits:
-              cpu: 2m
-              memory: 20Mi
-          readinessProbe:
-            httpGet:
-              path: /health
-              port: 3002
-            failureThreshold: 3
-            initialDelaySeconds: 3
-            periodSeconds: 5
-          livenessProbe:
-            httpGet:
-              path: /health
-              port: 3002
-            failureThreshold: 5
-            initialDelaySeconds: 3
-            periodSeconds: 3
+{{- range .container.env }}
+            - name: {{ .name }}
+              value: {{ .value }}
+{{- end }}
+          resources: {{ .container.resources | toYaml | nindent 12 }}
+          readinessProbe: {{ .container.readinessProbe | toYaml | nindent 12 }}
+          livenessProbe: {{ .container.livenessProbe | toYaml | nindent 12 }}
+{{- end }}
 ---
 {{- with .Values.services.product }}
 apiVersion: v1

@@ -1,40 +1,28 @@
 ---
+{{- with .Values.apps.makeline }}
 apiVersion: apps/v1
-kind: Deployment
+kind: {{ .kind }}
 metadata:
-  name: makeline-service
+  name: {{ .name }}
 spec:
   replicas: 1
   selector:
-    matchLabels:
-      app: makeline-service
+    matchLabels: {{ .selector | toYaml | nindent 6}}
   template:
     metadata:
-      labels:
-        app: makeline-service
+      labels: {{ .labels | toYaml | nindent 6 }}
     spec:
       nodeSelector:
         "kubernetes.io/os": linux
       containers:
         - name: makeline-service
-          image: ghcr.io/azure-samples/aks-store-demo/makeline-service:2.1.0
-          ports:
-            - containerPort: 3001
+          image: {{ .container.image }}:{{ .container.tag }}
+          ports: {{ .container.ports | toYaml | nindent 12 }}
           env:
-            - name: ORDER_QUEUE_URI
-              value: "amqp://rabbitmq:5672"
-            - name: ORDER_QUEUE_USERNAME
-              value: "username"
-            - name: ORDER_QUEUE_PASSWORD
-              value: "password"
-            - name: ORDER_QUEUE_NAME
-              value: "orders"
-            - name: ORDER_DB_URI
-              value: "mongodb://mongodb:27017"
-            - name: ORDER_DB_NAME
-              value: "orderdb"
-            - name: ORDER_DB_COLLECTION_NAME
-              value: "orders"
+{{- range .container.env }}
+            - name: {{ .name }}
+              value: {{ .value }}
+{{- end }} 
           resources:
             requests:
               cpu: 1m
@@ -62,6 +50,7 @@ spec:
             failureThreshold: 5
             initialDelaySeconds: 3
             periodSeconds: 3
+{{- end }}
 ---
 {{- with .Values.services.makeline }}
 apiVersion: v1

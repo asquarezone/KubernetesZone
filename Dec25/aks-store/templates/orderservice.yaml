@@ -84,15 +84,13 @@ spec:
               cpu: 100m
               memory: 256Mi
 ---
+{{- with .Values.services.order }}
 apiVersion: v1
 kind: Service
 metadata:
-  name: order-service
+  name: {{ .name }}
 spec:
-  type: ClusterIP
-  ports:
-    - name: http
-      port: 3000
-      targetPort: 3000
-  selector:
-    app: order-service
+  type: {{ .type }}
+  ports: {{ .ports | toYaml | nindent 4 }}
+  selector: {{ .selector | toYaml | nindent 4 }}
+{{- end }}

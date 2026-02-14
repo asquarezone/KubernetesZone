@@ -45,15 +45,13 @@ spec:
             initialDelaySeconds: 3
             periodSeconds: 3
 ---
+{{- with .Values.services.product }}
 apiVersion: v1
 kind: Service
 metadata:
-  name: product-service
+  name: {{ .name }}
 spec:
-  type: ClusterIP
-  ports:
-    - name: http
-      port: 3002
-      targetPort: 3002
-  selector:
-    app: product-service
+  type: {{ .type }}
+  ports: {{ .ports | toYaml | nindent 4 }}
+  selector: {{ .selector | toYaml | nindent 4 }}
+{{- end }}

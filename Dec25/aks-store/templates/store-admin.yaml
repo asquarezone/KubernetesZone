@@ -50,14 +50,13 @@ spec:
             initialDelaySeconds: 3
             periodSeconds: 3
 ---
+{{- with .Values.services.storeAdmin }}
 apiVersion: v1
 kind: Service
 metadata:
-  name: store-admin
+  name: {{ .name }}
 spec:
-  ports:
-    - port: 80
-      targetPort: 8081
-  selector:
-    app: store-admin
-  type: LoadBalancer
+  type: {{ .type }}
+  ports: {{ .ports | toYaml | nindent 4 }}
+  selector: {{ .selector | toYaml | nindent 4 }}
+{{- end }}

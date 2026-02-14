@@ -80,18 +80,13 @@ spec:
               - key: rabbitmq_enabled_plugins
                 path: enabled_plugins
 ---
+{{- with .Values.services.rabbitmq }}
 apiVersion: v1
 kind: Service
 metadata:
-  name: rabbitmq
+  name: {{ .name }}
 spec:
-  selector:
-    app: rabbitmq
-  ports:
-    - name: rabbitmq-amqp
-      port: 5672
-      targetPort: 5672
-    - name: rabbitmq-http
-      port: 15672
-      targetPort: 15672
-  type: ClusterIP
+  type: {{ .type }}
+  ports: {{ .ports | toYaml | nindent 4 }}
+  selector: {{ .selector | toYaml | nindent 4 }}
+{{- end }}

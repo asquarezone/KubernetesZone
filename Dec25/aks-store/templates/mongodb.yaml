@@ -50,13 +50,13 @@ spec:
             timeoutSeconds: 5
             failureThreshold: 3
 ---
+{{- with .Values.services.mongodb }}
 apiVersion: v1
 kind: Service
 metadata:
-  name: mongodb
+  name: {{ .name }}
 spec:
-  ports:
-    - port: 27017
-  selector:
-    app: mongodb
-  type: ClusterIP
+  type: {{ .type }}
+  ports: {{ .ports | toYaml | nindent 4 }}
+  selector: {{ .selector | toYaml | nindent 4 }}
+{{- end }}

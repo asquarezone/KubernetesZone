@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: nginx
+        image: shaikkhajaibrahim/ingress-home:1.0
         ports:
         - containerPort: 80
 ---

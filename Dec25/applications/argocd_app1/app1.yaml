@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: app1-cli
+  namespace: argocd
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/asquarezone/KubernetesZone.git
+    targetRevision: master
+    path: Dec25/applications/app1
+    directory:
+      recurse: true
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

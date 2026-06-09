@@ -7,7 +7,9 @@ services:
     networks:
       - store-network
     ports:
-      - "8082:8080"
+      - "${STORE_PORT:-8082}:8080"
+    env_file:
+      - stores.env
     depends_on:
       - db
   users:
@@ -17,16 +19,18 @@ services:
     networks:
       - store-network
     ports:
-      - "8081:8080"
+      - "${USER_PORT:-8081}:8080"
+    env_file:
+      - users.env
     depends_on:
       - db
   db:
     image: mysql:8.4
     environment:
-      - MYSQL_ROOT_PASSWORD=rootpassword
-      - MYSQL_DATABASE=myappdb
-      - MYSQL_USER=myuser
-      - MYSQL_PASSWORD=mypassword
+      - "MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-password}"
+      - "MYSQL_DATABASE=${MYSQL_DATABASE:-storesdb}"
+      - "MYSQL_USER=${MYSQL_USERNAME:-user}"
+      - "MYSQL_PASSWORD=${MYSQL_PASSWORD:-password}"
     networks:
       - store-network
     volumes:

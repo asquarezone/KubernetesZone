@@ -1,0 +1,39 @@
+---
+services:
+  store:
+    build:
+      context: ./store-service
+      dockerfile: Dockerfile
+    networks:
+      - store-network
+    ports:
+      - "8082:8080"
+    depends_on:
+      - db
+  users:
+    build:
+      context: ./user-service
+      dockerfile: Dockerfile
+    networks:
+      - store-network
+    ports:
+      - "8081:8080"
+    depends_on:
+      - db
+  db:
+    image: mysql:8.4
+    environment:
+      - MYSQL_ROOT_PASSWORD=rootpassword
+      - MYSQL_DATABASE=myappdb
+      - MYSQL_USER=myuser
+      - MYSQL_PASSWORD=mypassword
+    networks:
+      - store-network
+    volumes:
+      - store-data:/var/lib/mysql
+
+networks:
+  store-network:
+
+volumes:
+  store-data:

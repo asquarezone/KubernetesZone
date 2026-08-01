@@ -1,12 +1,19 @@
+# ---------------------------------------------------------------------------
+# Provider set: HashiCorp-published registry namespaces only.
+#
+#   hashicorp/azurerm  - the official HashiCorp Azure provider
+#   hashicorp/random   - name uniqueness helper
+#
+# Deliberately NOT used: Azure/azapi, Azure/azuread, Azure/modtm and any other
+# provider published under a non-HashiCorp namespace. Every resource in this
+# project is expressible in azurerm 4.x, so the extra dependency buys nothing
+# and complicates registry allow-listing in locked-down corporate networks.
+# ---------------------------------------------------------------------------
 terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
       version = "~> 4.20"
-    }
-    azapi = {
-      source  = "Azure/azapi"
-      version = "~> 2.2"
     }
     random = {
       source  = "hashicorp/random"
@@ -27,7 +34,5 @@ provider "azurerm" {
     }
   }
 }
-
-provider "azapi" {}
 
 data "azurerm_client_config" "current" {}

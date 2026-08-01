@@ -28,7 +28,7 @@ add and remove nodes under full observability.
 ```
 aks-store-infra/
 ├── backend.tf              remote state (azurerm)
-├── providers.tf            azurerm 4.x, azapi, random
+├── providers.tf            hashicorp/azurerm 4.x + hashicorp/random ONLY
 ├── variables.tf            every knob, documented
 ├── locals.tf               naming + tagging convention
 ├── main.tf                 module wiring + role assignments
@@ -54,6 +54,7 @@ aks-store-infra/
 
 # 1. Remote state (run once, then paste the SA name into backend.tf)
 ./scripts/bootstrap-backend.sh
+./scripts/grant-backend-access.sh <storage-account-name>   # data-plane RBAC
 
 # 2. Configure
 cp envs/dev.example.tfvars envs/dev.tfvars
@@ -154,6 +155,24 @@ az group list --query "[?starts_with(name,'rg-aksstore')].name" -o tsv
 | `ImagePullBackOff` from ACR | `AcrPull` role not propagated yet | RBAC is eventually consistent |
 | Grafana shows "no data" | DCRA missing — Prometheus was never turned on | the association is the switch |
 | State lock error | two students, one backend | why remote state exists |
+| `403 AuthorizationPermissionMismatch` on `init` | Contributor is control-plane; blobs need `Storage Blob Data Contributor` | Azure RBAC has two planes |
+
+---
+
+## Provider policy
+
+This project uses **only HashiCorp-published providers**: `hashicorp/azurerm`
+and `hashicorp/random`. No `Azure/azapi`, no `Azure/azuread`. Everything the
+lab needs — including managed Prometheus data collection rules and Managed
+Grafana — is supported natively in `azurerm` 4.x.
+
+Why it matters in a classroom: many corporate networks allow-list the Terraform
+Registry by namespace. A single-namespace dependency graph installs cleanly
+behind a proxy and keeps `terraform init` reproducible.
+
+```bash
+terraform providers   # should list exactly two, both hashicorp/
+```
 
 ---
 

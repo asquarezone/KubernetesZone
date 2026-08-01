@@ -1,0 +1,53 @@
+# ---------------------------------------------------------------------------
+# The "big pod" demo - a pod that does nothing but RESERVE CPU.
+#
+# SIZING THIS CORRECTLY IS THE WHOLE TRICK. On an e2-standard-2 (2 vCPU):
+#
+#   capacity                                    2000m
+#   allocatable (GKE reserves ~6% + eviction)  ~1930m
+#   GKE system DaemonSets (fluentbit-gke,
+#     gke-metrics-agent, pdcsi, netd, kube-proxy) ~400-600m
+#   -------------------------------------------------
+#   left for your workloads on a FRESH node     ~1300-1500m
+#
+# GKE's reservation formula is public and worth showing students:
+#   CPU: 6% of first core, 1% of next, 0.5% of next 2, 0.25% of the rest
+#   Memory: 25% of first 4GB, 20% of next 4GB, 10% of next 8GB, ...
+#
+# VERIFY BEFORE YOU TEACH, on your machine type:
+#   kubectl describe nodes |
+#     awk '/^Name:/{n=$2} /Allocated resources/{f=1} f&&/cpu /{print n,$2,$3; f=0}'
+#
+# 500m fits reliably on a 2 vCPU node and still guarantees that a handful of
+# replicas cannot share one node. On 4 vCPU+ nodes raise it to 1000m-2000m.
+#
+#   kubectl -n pets scale deploy/scale-anchor --replicas=3
+#   kubectl get nodes -w
+# ---------------------------------------------------------------------------
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: scale-anchor
+  namespace: pets
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: scale-anchor
+  template:
+    metadata:
+      labels:
+        app: scale-anchor
+    spec:
+      nodeSelector:
+        nodepool-type: user
+      containers:
+        - name: pause
+          image: registry.k8s.io/pause:3.9
+          resources:
+            requests:
+              cpu: "500m"
+              memory: "512Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"

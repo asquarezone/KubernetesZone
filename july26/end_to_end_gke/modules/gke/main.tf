@@ -55,7 +55,7 @@ resource "google_container_cluster" "this" {
   network    = var.network_id
   subnetwork = var.subnet_id
 
-  min_master_version = var.kubernetes_version
+  min_master_version  = var.kubernetes_version
   deletion_protection = var.deletion_protection
 
   release_channel {

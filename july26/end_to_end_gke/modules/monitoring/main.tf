@@ -114,8 +114,8 @@ resource "google_monitoring_alert_policy" "node_not_ready" {
       duration        = "300s"
 
       aggregations {
-        alignment_period   = "60s"
-        per_series_aligner = "ALIGN_MAX"
+        alignment_period     = "60s"
+        per_series_aligner   = "ALIGN_MAX"
         cross_series_reducer = "REDUCE_MAX"
       }
     }

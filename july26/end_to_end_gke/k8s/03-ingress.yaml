@@ -1,0 +1,58 @@
+# ---------------------------------------------------------------------------
+# Ingress via the GKE Ingress controller (the http_load_balancing add-on).
+#
+# HOW THIS DIFFERS FROM ITS SIBLINGS:
+#   AKS  managed NGINX  -> an in-cluster proxy pod behind one LoadBalancer IP
+#   EKS  ALB controller -> an AWS ALB, no in-cluster proxy, routes to pod IPs
+#   GKE  GCE Ingress    -> a GLOBAL Google Cloud HTTP(S) Load Balancer, no
+#                          in-cluster proxy, routes to Network Endpoint Groups
+#
+# The NEG annotation is the important part. Without it, GKE falls back to
+# routing through node ports with a second hop; with it, the load balancer
+# talks straight to pod IPs - the container-native path.
+#
+# GKE Ingress needs the Service to be NodePort or ClusterIP+NEG. The upstream
+# store-front Service is type LoadBalancer, which ALSO works, but provisions
+# its own separate L4 load balancer. See README Part 8.
+#
+# Provisioning a global HTTP LB takes 3-7 MINUTES. It is not broken; it is
+# global, and that is what global costs.
+# ---------------------------------------------------------------------------
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: store-front
+  namespace: pets
+  annotations:
+    kubernetes.io/ingress.class: "gce"
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: store-front
+                port:
+                  number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: store-admin
+  namespace: pets
+  annotations:
+    kubernetes.io/ingress.class: "gce"
+spec:
+  rules:
+    - host: admin.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: store-admin
+                port:
+                  number: 80

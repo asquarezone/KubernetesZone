@@ -1,0 +1,35 @@
+# ---------------------------------------------------------------------------
+# The "big pod" demo. Each replica requests 1 full CPU, so a Standard_D2s_v5
+# node (2 vCPU, ~1.9 allocatable) fits roughly one. Scale this to 6 and the
+# cluster autoscaler MUST add nodes.
+#
+#   kubectl -n pets scale deploy/scale-anchor --replicas=6
+#   kubectl get nodes -w
+# ---------------------------------------------------------------------------
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: scale-anchor
+  namespace: pets
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: scale-anchor
+  template:
+    metadata:
+      labels:
+        app: scale-anchor
+    spec:
+      nodeSelector:
+        nodepool-type: user
+      containers:
+        - name: pause
+          image: registry.k8s.io/pause:3.9
+          resources:
+            requests:
+              cpu: "1000m"
+              memory: "1Gi"
+            limits:
+              cpu: "1000m"
+              memory: "1Gi"

@@ -1,0 +1,9 @@
+variable "suffix"              { type = string }
+variable "location"            { type = string }
+variable "resource_group_name" { type = string }
+variable "tags"                { type = map(string) }
+variable "log_retention_days"  { type = number }
+variable "enable_grafana"      { type = bool }
+variable "grant_current_user_grafana_admin" { type = bool }
+variable "current_user_object_id" { type = string }
+variable "alert_email"         { type = string }

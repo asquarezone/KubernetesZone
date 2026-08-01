@@ -1,0 +1,41 @@
+# Uses the AKS managed NGINX controller enabled by web_app_routing in Terraform.
+# Get the public IP with:
+#   kubectl -n app-routing-system get svc nginx -o jsonpath='{.status.loadBalancer.ingress[0].ip}'
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: store-front
+  namespace: pets
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: "10m"
+spec:
+  ingressClassName: webapprouting.kubernetes.azure.com
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: store-front
+                port:
+                  number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: store-admin
+  namespace: pets
+spec:
+  ingressClassName: webapprouting.kubernetes.azure.com
+  rules:
+    - host: admin.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: store-admin
+                port:
+                  number: 80

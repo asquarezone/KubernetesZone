@@ -1,0 +1,57 @@
+# ---------------------------------------------------------------------------
+# The "big pod" demo - a pod that does nothing but RESERVE CPU.
+#
+# SIZING THIS CORRECTLY IS THE WHOLE TRICK. On a t3.large (2 vCPU / 8 GiB):
+#
+#   capacity                                   2000m
+#   allocatable (after kube + eviction reserve) ~1930m
+#   add-on DaemonSets (aws-node/VPC CNI,
+#     kube-proxy, cloudwatch-agent, fluent-bit) ~400-700m
+#   ------------------------------------------------
+#   left for your workloads on a FRESH node     ~1200-1500m
+#
+# EKS's baseline add-on footprint is LIGHTER than AKS's, because AKS enables
+# far more by default (KEDA, VPA, Gatekeeper, image cleaner, managed NGINX).
+# But once you install the AWS Load Balancer Controller and the CloudWatch
+# agent, the gap narrows.
+#
+# 500m fits reliably on a 2 vCPU node and still guarantees that a handful of
+# replicas cannot share one node - which is all the demo needs.
+#
+# VERIFY BEFORE YOU TEACH, on your instance type:
+#   kubectl describe nodes |
+#     awk '/^Name:/{n=$2} /Allocated resources/{f=1} f&&/cpu /{print n,$2,$3; f=0}'
+#
+# If your nodes are 4 vCPU or larger, raise this to 1000m-2000m so that each
+# replica still meaningfully consumes a node.
+#
+#   kubectl -n pets scale deploy/scale-anchor --replicas=3
+#   kubectl get nodes -w
+# ---------------------------------------------------------------------------
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: scale-anchor
+  namespace: pets
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: scale-anchor
+  template:
+    metadata:
+      labels:
+        app: scale-anchor
+    spec:
+      nodeSelector:
+        nodepool-type: user
+      containers:
+        - name: pause
+          image: registry.k8s.io/pause:3.9
+          resources:
+            requests:
+              cpu: "500m"
+              memory: "512Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"

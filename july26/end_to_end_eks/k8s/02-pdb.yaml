@@ -1,0 +1,27 @@
+# PodDisruptionBudgets stop the cluster autoscaler from draining a node into
+# an outage during scale-down. Remove one and watch scale-down misbehave.
+#
+# WARNING, learned the hard way: a PDB blocks YOU as well as the autoscaler.
+# If you delete a node group while a PDB cannot be satisfied, the drain waits
+# forever and terraform destroy appears to hang. See README Part 10.
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: store-front
+  namespace: pets
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: store-front
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: order-service
+  namespace: pets
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: order-service

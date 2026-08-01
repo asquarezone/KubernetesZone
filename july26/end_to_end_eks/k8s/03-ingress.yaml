@@ -1,0 +1,66 @@
+# ---------------------------------------------------------------------------
+# Ingress via the AWS Load Balancer Controller.
+#
+# THE DIFFERENCE FROM AKS: on AKS, web_app_routing gives you a managed NGINX
+# controller and one shared LoadBalancer Service; every Ingress becomes a
+# path on that one IP. On AWS, the LB controller provisions a real
+# Application Load Balancer per Ingress group. There is no in-cluster proxy
+# at all - the ALB is AWS infrastructure that routes straight to pod IPs
+# (which works because the VPC CNI gives pods real VPC addresses).
+#
+# alb.ingress.kubernetes.io/group.name puts both Ingress objects behind ONE
+# ALB instead of two. Omit it and you pay for two load balancers.
+#
+# Get the address with:
+#   kubectl -n pets get ingress
+# ---------------------------------------------------------------------------
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: store-front
+  namespace: pets
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/group.name: pets-store
+    alb.ingress.kubernetes.io/group.order: "10"
+    alb.ingress.kubernetes.io/healthcheck-path: /
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
+spec:
+  ingressClassName: alb
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: store-front
+                port:
+                  number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: store-admin
+  namespace: pets
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/group.name: pets-store
+    alb.ingress.kubernetes.io/group.order: "20"
+    alb.ingress.kubernetes.io/healthcheck-path: /
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
+spec:
+  ingressClassName: alb
+  rules:
+    - host: admin.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: store-admin
+                port:
+                  number: 80
